@@ -1,0 +1,28 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	<title>Circle Hack</title>
+</head>
+
+<body>
+  <div id="fb-root"></div><script src="http://connect.facebook.net/en_US/all.js"></script>
+  <div style="padding: 3em; text-align: center;" id="forceLogin">
+    <p>Please login to Facebook to use Circle Hack</p>
+    <fb:login-button width="200" perms="user_about_me,friends_about_me,user_activities,friends_activities,user_birthday,friends_birthday,user_checkins,friends_checkins,user_education_history,friends_education_history,user_events,friends_events,user_groups,friends_groups,user_hometown,friends_hometown,user_interests,friends_interests,user_likes,friends_likes,user_location,friends_location,user_notes,friends_notes,user_online_presence,friends_online_presence,user_photo_video_tags,friends_photo_video_tags,user_photos,friends_photos,user_relationships,friends_relationships,user_relationship_details,friends_relationship_details,user_religion_politics,friends_religion_politics,user_status,friends_status,user_videos,friends_videos,user_website,friends_website,user_work_history,friends_work_history "></fb:login-button>
+  </div>
+  <script>
+    FB.init({appId: '142936615786776', status: false, cookie: true, xfbml: true });
+    FB.Event.subscribe('auth.login', function(response) {
+      location.href = './';
+    });
+    FB.getLoginStatus(function(response) {
+      if (response.perms) {
+        location.href = './';
+      }
+    });
+  </script>
+</body>
+</html>
