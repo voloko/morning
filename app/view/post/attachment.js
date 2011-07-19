@@ -5,21 +5,10 @@ requireCss('./../image-block/image-block.css');
 var v = require('../../../muv/v');
 var u = require('../../../muv/u');
 
-var PostAttachment = v.PostAttachment = v.Base.createClass();
+var PostAttachment = v.PostAttachment = require('../composable').createClass();
 var p = PostAttachment.prototype;
 
 p.defaultClassName = 'm-post-attch m-image-block';
-
-Object.defineProperty(p, 'value', {
-  set: function(value) {
-    this._value = value;
-    this.dom.innerHTML = '';
-    this.dom.appendChild(this.compose());
-  },
-  get: function() {
-    return this._value;
-  }
-});
 
 p.compose = function() {
   var value = this.value;

@@ -23,6 +23,7 @@ Sync.fetchHome = function(options, callback) {
       ' OR id IN (SELECT target_id FROM #posts)'
   }, function(r) {
     var posts = Sync.result2Models(r.posts);
+    console.log(posts);
     require('./profileSync').result2Models(r.members);
     callback(posts);
   });

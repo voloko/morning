@@ -3,26 +3,14 @@ requireCss('./post.css');
 var v = require('../../../muv/v');
 var u = require('../../../muv/u');
 
-v.Post = v.Base.createClass();
+v.Post = require('../composable').createClass();
 var p = v.Post.prototype;
 
 p.defaultClassName = 'm-post';
 
-p.defaultBindingOptions = { modelProp: '', viewProp: 'value' };
-Object.defineProperty(p, 'value', {
-  set: function(value) {
-    this._value = value;
-    this.dom.innerHTML = '';
-    this.dom.appendChild(this.compose());
-  },
-  get: function() {
-    return this._value;
-  }
-});
-
 p.composeFrom = function() {
   u.cls.add(this, 'm-post_with-icon', !this.value.message);
-  if (this.value.message && this.value.actor) {
+  if (this.value.actor) {
     return v({
       tag: 'img', className: "m-post-from-pic", 
       src: this.value.actor.pic_square
@@ -45,7 +33,8 @@ p.composeContent = function() {
     attachment.media && { view: require('./attachment'), value: this.value.attachment },
     { tag: 'div', className: 'm-post-actions', children: [
       { view: require('../timestamp/timestamp'), value: this.value.time }
-    ] }
+    ] },
+    this.value.hasCommentsOrLikes && { view: require('./counts'), value: this.value }
   ] });
 };
 

@@ -1,7 +1,7 @@
 .m-post {
   position: relative;
   min-height: 40px;
-  padding: 5px 8px 5px 5px;
+  padding: 5px 8px 7px 5px;
   border-bottom: 1px solid #EEE;
   background: -webkit-linear-gradient(top, #ffffff 0%,#f4f4f4 86%,#f9f9f9 100%);
 }

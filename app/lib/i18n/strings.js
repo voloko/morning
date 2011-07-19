@@ -16,6 +16,11 @@ module.exports = {
   'dta:sep': 'Sep',
   'dta:oct': 'Oct',
   'dta:nov': 'Nov',
-  'dta:dec': 'Dec'
+  'dta:dec': 'Dec',
+  
+  'pct:1cm': '1 comment',
+  'pct:ncm': '{count} comments',
+  'pct:1lk': '1 person',
+  'pct:nlk': '{count} people'
 };
 

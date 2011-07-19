@@ -45,17 +45,21 @@ Object.defineProperties(p, {
     configurable: true,
     get: function() {
       return require('../sync/baseSync').cached(this.source_id);
-    } }
-});
-
-Object.defineProperty(p, 'id', {
-  configurable: true,
-  enumerable: true,
-  get: function() {
-    return this.post_id;
+    } },
+  id: {
+    configurable: true,
+    enumerable: true,
+    get: function() {
+      return this.post_id;
+    },
+    set: function(value) {
+      this.post_id = value;
+    }
   },
-  set: function(value) {
-    this.post_id = value;
+  hasCommentsOrLikes: {
+    get: function() {
+      return (this.comments && this.comments.count*1) || (this.likes && this.likes.count*1);
+    }
   }
 });
 

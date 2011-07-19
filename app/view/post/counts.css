@@ -1,0 +1,34 @@
+.m-post-counts {
+  display: inline-block;
+  cursor: pointer;
+}
+
+.m-post-counts-nub {
+  height: 7px;
+  overflow: hidden;
+  background: url(nub.png) no-repeat 9px 0;
+  width: 20px;
+}
+
+.m-post-counts-bar {
+  background: #EDEFF4;
+  color: #3B5998;
+  border-bottom: 1px solid #E5EAF1;
+  padding: 4px 9px 4px 9px;
+  border-top: 1px solid #EDEFF4;
+  font-weight: bold;
+  font-size: 12px;
+}
+
+.m-post-counts-likes + .m-post-counts-comments {
+  margin-left: 12px;
+}
+
+.m-post-counts-likes {
+  background: url(like.png) no-repeat 0 50%;
+  padding-left: 17px;
+}
+.m-post-counts-comments {
+  background: url(comment.png) no-repeat 0 50%;
+  padding-left: 17px;
+}
