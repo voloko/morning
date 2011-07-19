@@ -34,7 +34,8 @@ p.composeContent = function() {
     { tag: 'div', className: 'm-post-actions', children: [
       { view: require('../timestamp/timestamp'), value: this.value.time }
     ] },
-    this.value.hasCommentsOrLikes && { view: require('./counts'), value: this.value }
+    this.value.hasCommentsOrLikes && { view: require('./counts'), value: this.value },
+    { tag: 'a', className: 'm-post-more', href: '#' }
   ] });
 };
 

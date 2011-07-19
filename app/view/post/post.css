@@ -3,6 +3,9 @@
   min-height: 40px;
   padding: 5px 8px 7px 5px;
   border-bottom: 1px solid #EEE;
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(86%,#f4f4f4), color-stop(100%,#f9f9f9));
+}
+.m-post {
   background: -webkit-linear-gradient(top, #ffffff 0%,#f4f4f4 86%,#f9f9f9 100%);
 }
 
@@ -25,6 +28,7 @@
 
 .m-post-content {
   margin-left: 40px;
+  margin-right: 30px;
 }
 
 .m-post-actor {
@@ -33,4 +37,15 @@
 
 .m-post-actions .m-timestamp {
   margin: 3px 0;
+}
+
+.m-post-more {
+  background: url(more.png) no-repeat 50% 50%;
+  position: absolute;
+  right: 5px;
+  top: 50%;
+  width: 20px;
+  height: 22px;
+  margin-top: -11px;
+  padding: 3px;
 }

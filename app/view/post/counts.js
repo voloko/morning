@@ -24,6 +24,7 @@ function formatComments(count) {
 p.compose = function() {
   var likes = this.value.likes && this.value.likes.count;
   var comments = this.value.comments && this.value.comments.count;
+  this.dom.href = '#';
   return v(
     { fragment: true, children: [
       { tag: 'div', className: 'm-post-counts-nub' },
