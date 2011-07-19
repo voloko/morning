@@ -4,21 +4,33 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
 	<title>Morning</title>
 </head>
 
 <body class="fc">
   <div id="fb-root"></div><script src="http://connect.facebook.net/en_US/all.js"></script>
-  <script type="text/javascript" charset="utf-8" src="./app.js"></script>
+  <script type="text/javascript" charset="utf-8" src="./app/app.js"></script>
+  <script type="text/javascript" charset="utf-8">
+    app.init();
+  </script>
   <script>
-    FB.init({appId: '142936615786776', status: false, cookie: true, xfbml: true });
-    FB.getLoginStatus(function(response) {
-      if (!response.perms) {
-        location.href = './login.html';
-      } else {
-        startApp();
-      }
-    });
+    window.fbAsyncInit = function() {
+      FB.init({appId: '142936615786776', status: false, cookie: true, xfbml: false });
+      FB.getLoginStatus(function(response) {
+        if (!response.perms) {
+          location.href = './login.html';
+        } else {
+          app.run();
+        }
+      });
+    };
+    (function() {
+      var e = document.createElement('script'); 
+      e.async = true;
+      e.src = '//connect.facebook.net/en_US/all.js';
+      document.getElementById('fb-root').appendChild(e);
+    }());  
   </script>
 </body>
 </html>

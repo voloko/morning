@@ -1,0 +1,36 @@
+.m-post {
+  position: relative;
+  min-height: 40px;
+  padding: 5px 8px 5px 5px;
+  border-bottom: 1px solid #EEE;
+  background: -webkit-linear-gradient(top, #ffffff 0%,#f4f4f4 86%,#f9f9f9 100%);
+}
+
+.m-post_with_icon {
+  min-height: 20px;
+}
+
+.m-post-from-pic {
+  width: 34px;
+  height: 34px;
+  position: absolute;
+}
+
+.m-post-from-icon {
+  width: 16px;
+  height: 16px;
+  left: 18px;
+  position: absolute;
+}
+
+.m-post-content {
+  margin-left: 40px;
+}
+
+.m-post-actor {
+  font-weight: bold;
+}
+
+.m-post-actions .m-timestamp {
+  margin: 3px 0;
+}

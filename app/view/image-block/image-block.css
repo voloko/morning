@@ -1,0 +1,17 @@
+.m-image-block {
+  position: relative;
+}
+
+.m-image-block-left {
+  display: block;
+  float: left;
+  margin-right: 4px;
+}
+
+.m-image-block-content {
+  display: table-cell;
+}
+
+.m-image-block-ext {
+  float: right;
+}

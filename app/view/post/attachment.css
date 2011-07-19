@@ -1,0 +1,36 @@
+.m-post-attch {
+  margin: 5px 0;
+  font-size: 12px;
+}
+
+.m-post-attch-media {
+  padding: 2px;
+  border: 1px solid #CCC;
+  margin-bottom: 2px;
+}
+
+.m-post-attch-name {
+  font-weight: bold;
+}
+
+.m-post-attch-caption {
+  margin-top: 2px;
+  color: #777;
+}
+
+.m-post-attch .m-image-block-left {
+  margin-right: 7px;
+}
+
+.u-post-attch_without-media {
+  border-left: 2px solid #CCC;
+  padding-left: 7px;
+}
+
+.u-post-attch_multi-media .m-post-attch-content {
+  clear: both;
+  border-left: 2px solid #CCC;
+  padding-left: 7px;
+  display: block;
+  margin-top: 6px;
+}

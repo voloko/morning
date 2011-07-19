@@ -1,0 +1,28 @@
+body {
+  margin: 0;
+  padding: 0;
+}
+
+body,
+tr,
+input,
+textarea {
+  font-family: sans-serif;
+  font-size: 14px;
+}
+
+a:link,
+a:visited {
+  text-decoration: none;
+  color: #3B5998;
+  -webkit-tap-highlight-color: rgba(128, 128, 128, 0.5);
+}
+
+.clear {
+  clear: both;
+}
+
+
+.test {
+  background: red;
+}
