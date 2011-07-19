@@ -1,0 +1,28 @@
+.m-navbar {
+  background-color: #3B5998;
+  border-bottom: 1px solid #1D4088;
+  height: 40px;
+  background: -webkit-linear-gradient(top, #3B5998 0%,#37538d 86%,#38548e 100%);
+  position: relative;
+}
+
+.m-navbar-back {
+  display: block;
+  background: url(back.png) no-repeat 18px 50%;
+  position: absolute;
+  width: 55px;
+  height: 100%;
+}
+
+.m-navbar-title {
+  display: block;
+  padding-top: 3px;
+  margin-left: 45px;
+  padding-left: 10px;
+  border-left: 1px solid #1D4088;
+  line-height: 37px;
+  font-size: 16px;
+  color: #FFF;
+  font-weight: bold;
+  text-shadow: 0 -1px 0 #1D4088;
+}

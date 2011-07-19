@@ -1,26 +1,29 @@
 requireCss('./app.css');
 
 var app = global.app = {};
+var refs = {};
 
 app.init = function() {
   var v = require('../muv/v');
-  
+
   document.head.appendChild(
     v({ tag: 'style', text: __requiredCss })
+  );
+
+  document.body.appendChild(
+    v({ fragment: true, children: [
+      { view: require('./view/navbar/navbar'), as: 'navbar', title: 'Facebook' },
+      { view: require('./view/stream/stream'), as: 'stream' }
+    ]}, refs)
   );
 };
 
 
 app.run = function() {
-  var v = require('../muv/v');
-  var List = require('../common/view/list/list');
-  var Post = require('../app/view/post/post');
-  
   require('sync/postSync').fetchHome({ limit: 25 }, function(posts) {
-    document.body.appendChild(
-      v({ view: List, style: 'margin: 5px 0', children: posts.map(function(post) {
-        return { view: Post, value: post };
-      }) }).dom
-    );
+    refs.stream.appendPosts(posts);
+    setTimeout(function(){
+      window.scrollTo(0, 1);
+    }, 1);
   });
 };

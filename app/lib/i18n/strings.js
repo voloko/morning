@@ -21,6 +21,9 @@ module.exports = {
   'pct:1cm': '1 comment',
   'pct:ncm': '{count} comments',
   'pct:1lk': '1 person',
-  'pct:nlk': '{count} people'
+  'pct:nlk': '{count} people',
+  
+  'str:more': 'See more posts…',
+  'str:loading': 'Loading'
 };
 

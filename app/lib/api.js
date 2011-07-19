@@ -5,8 +5,9 @@ exports.query = function(query, callback) {
 };
 
 exports.multiquery = function(queries, callback) {
-  console.log(queries);
+  console.log('multiquery:sql', queries);
   FB.api({ method: 'fql.multiquery', queries: queries }, function(result) {
+    console.log('multiquery:result', queries);
     var hashResult = {};
     result.forEach(function(item) {
       hashResult[item.name] = item.fql_result_set;

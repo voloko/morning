@@ -2,7 +2,8 @@ requireCss('./timestamp.css');
 
 var timeSince = require('../../lib/timeSince');
 var v = require('../../../muv/v');
-var Timestamp = v.Timestamp = v.Base.createClass();
+
+var Timestamp = module.exports = v.Base.createClass();
 var p = Timestamp.prototype;
 
 p.defaultClassName = 'm-timestamp';
@@ -16,5 +17,3 @@ Object.defineProperty(p, 'value', {
   get: function() {
     return this._value;
   }});
-
-module.exports = Timestamp;

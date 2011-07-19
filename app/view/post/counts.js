@@ -3,8 +3,8 @@ requireCss('./counts.css');
 var v = require('../../../muv/v');
 var tx = require('../../lib/tx');
 
-var PostCounts = v.PostCounts = require('../composable').createClass();
-var p = v.PostCounts.prototype;
+var PostCounts = module.exports = require('../composable').createClass();
+var p = PostCounts.prototype;
 
 p.defaultClassName = 'm-post-counts';
 
@@ -35,6 +35,3 @@ p.compose = function() {
     ] }
   );
 };
-
-
-module.exports = PostCounts;

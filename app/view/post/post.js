@@ -3,8 +3,8 @@ requireCss('./post.css');
 var v = require('../../../muv/v');
 var u = require('../../../muv/u');
 
-v.Post = require('../composable').createClass();
-var p = v.Post.prototype;
+var Post = module.exports = require('../composable').createClass();
+var p = Post.prototype;
 
 p.defaultClassName = 'm-post';
 
@@ -12,14 +12,14 @@ p.composeFrom = function() {
   u.cls.add(this, 'm-post_with-icon', !this.value.message);
   if (this.value.actor) {
     return v({
-      tag: 'img', className: "m-post-from-pic", 
+      tag: 'img', className: "m-post-from-pic",
       src: this.value.actor.pic_square
     }, this);
   } else {
     var attachment = this.value.attachment;
     return attachment && attachment.icon && v({
-      tag: 'img', className: "m-post-from-icon", 
-      src: attachment.icon 
+      tag: 'img', className: "m-post-from-icon",
+      src: attachment.icon
     }, this);
   }
 };
@@ -42,7 +42,7 @@ p.composeContent = function() {
 p.composeVoice = function() {
   var target = this.value.target;
   var actor = this.value.actor;
-  
+
   if (target) {
     return v({ fragment: true, children: [
       { tag: 'a', className: 'm-post-actor', text: actor.name, href: actor.url },
@@ -68,5 +68,3 @@ p.compose = function() {
 function profilePic(id) {
   return '//graph.facebook.com/' + id + '/picture';
 }
-
-module.exports = v.Post;

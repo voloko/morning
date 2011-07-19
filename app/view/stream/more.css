@@ -1,0 +1,22 @@
+.m-navbar-more {
+  display: block;
+  padding-left: 10px;
+  line-height: 40px;
+  font-size: 14px;
+  font-weight: bold;
+  border: 1px solid #CCC;
+  border-left: none;
+  border-right: none;
+}
+
+.m-navbar-more-loader {
+  display: none;
+}
+
+.m-navbar-more_loading .m-navbar-more-loader {
+  display: inline-block;
+  background: url(indicator_blue_small.gif) 0 0;
+  width: 16px;
+  height: 11px;
+  margin-left: 5px;
+}
