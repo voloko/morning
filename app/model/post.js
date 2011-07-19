@@ -1,27 +1,29 @@
 var m = require('../../muv/m');
+var u = require('../../muv/u');
 
-var Post = m.Base.createClass();
+var Post = require('./base').createClass();
 var p = Post.prototype;
 
+var obj = {};
 m.defineProperties(p, {
-  post_id:      {},
-  app_id:       {},
-  source_id:    {},
-  updated_time: {},   
-  created_time: {},   
-  filter_key:   {}, 
-  attribution:  {},  
-  actor_id:     {},
-  target_id:    {},
-  message:      {},
-  app_data:     {},
-  action_links: {},   
-  attachment:   {}, 
-  comments:     {},
-  likes:        {},
-  privacy:      {},
-  permalink:    {},
-  tagged_ids:   {}
+  post_id:      obj,
+  app_id:       obj,
+  source_id:    obj,
+  updated_time: obj,   
+  created_time: obj,   
+  filter_key:   obj, 
+  attribution:  obj,  
+  actor_id:     obj,
+  target_id:    obj,
+  message:      obj,
+  app_data:     obj,
+  action_links: obj,   
+  attachment:   obj, 
+  comments:     obj,
+  likes:        obj,
+  privacy:      obj,
+  permalink:    obj,
+  tagged_ids:   obj
 });
 
 Object.defineProperties(p, {
@@ -46,22 +48,19 @@ Object.defineProperties(p, {
     get: function() {
       return require('../sync/baseSync').cached(this.source_id);
     } },
-  id: {
-    configurable: true,
-    enumerable: true,
-    get: function() {
-      return this.post_id;
-    },
-    set: function(value) {
-      this.post_id = value;
-    }
-  },
   hasCommentsOrLikes: {
     get: function() {
       return (this.comments && this.comments.count*1) || (this.likes && this.likes.count*1);
     }
   }
 });
+
+u.alias.prop(p, 'post_id', 'id');
+// remove id as real prop
+p.propNames = p.propNames.slice(1);
+
+
+
 
 
 module.exports = Post;

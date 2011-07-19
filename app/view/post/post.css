@@ -9,6 +9,10 @@
   background: -webkit-linear-gradient(top, #ffffff 0%,#f4f4f4 86%,#f9f9f9 100%);
 }
 
+.m-post a {
+  word-break: break-word;
+}
+
 .m-post_with_icon {
   min-height: 20px;
 }

@@ -4,27 +4,31 @@ var Base = require('./baseSync');
 
 var Sync = u.extend({}, Base, {
   model: require('../model/post'),
-  
-  getFqlFields: function() {
-    return this.model.prototype.propNames.slice(1);
-  },
-  
+
   fqlTable: 'stream'
 });
 
 Sync.fetchHome = function(options, callback) {
+  options = options || {};
+
   api.multiquery({
-    posts: this.buildSELECT(options) + 
+    posts: this.buildSELECT('all') +
       ' WHERE filter_key = "others"' +
       'LIMIT ' + options.limit || 25,
-    members: require('./profileSync').buildSELECT() + 
-      ' WHERE id IN (SELECT actor_id FROM #posts)' +
-      ' OR id IN (SELECT source_id FROM #posts)' +
-      ' OR id IN (SELECT target_id FROM #posts)'
+    pages: require('./pageSync').buildSELECT('min') +
+      ' WHERE page_id IN (SELECT actor_id FROM #posts)' +
+      ' OR page_id IN (SELECT source_id FROM #posts)' +
+      ' OR page_id IN (SELECT tagged_ids FROM #posts)' +
+      ' OR page_id IN (SELECT target_id FROM #posts)',
+    users: require('./userSync').buildSELECT('min') +
+      ' WHERE uid IN (SELECT actor_id FROM #posts)' +
+      ' OR uid IN (SELECT source_id FROM #posts)' +
+      ' OR uid IN (SELECT tagged_ids FROM #posts)' +
+      ' OR uid IN (SELECT target_id FROM #posts)'
   }, function(r) {
-    var posts = Sync.result2Models(r.posts);
-    console.log(posts);
-    require('./profileSync').result2Models(r.members);
+    var posts = Sync.createAndCacheModels('all', r.posts);
+    require('./pageSync').createAndCacheModels('min', r.pages);
+    require('./userSync').createAndCacheModels('min', r.users);
     callback(posts);
   });
 };

@@ -1,35 +1,57 @@
 var Sync = {
   model: null,
-  
+
   fqlTable: '',
-  
-  getFqlFields: function() {
+
+  cacheProfiles: ['min', 'all'],
+
+  getFqlFields: function(fieldSet) {
+    return fieldSet === 'min' ?
+      this.getFqlFieldsMinimal() :
+      this.getFqlFieldsAll();
+  },
+
+  getFqlFieldsMinimal: function() {
     return this.model.prototype.propNames;
   },
-  
-  buildSELECT: function(options) {
-    options = options || {};
-    var fields = options.fields || this.getFqlFields();
+
+  getFqlFieldsAll: function() {
+    return this.model.prototype.propNames;
+  },
+
+  buildSELECT: function(fieldSet) {
+    var fields = this.getFqlFields(fieldSet);
     return 'SELECT ' + fields.join(', ') + ' FROM ' + this.fqlTable;
   },
-  
-  result2Models: function(result) {
+
+  createAndCacheModels: function(fieldSet, data) {
     var Model = this.model;
-    return result.map(function(data) {
-      var model = new Model(data);
-      Sync.addToCache(model);
-      return model;
-    });
+    var fields = this.getFqlFields(fieldSet);
+
+    return data.map(function(dataRow) {
+      var newModel = new Model(dataRow);
+      newModel.fieldSet = fieldSet;
+
+      var cachedModel = this.cached(newModel.id);
+      if (cachedModel) {
+        fields.forEach(function(name) {
+          cachedModel[name] = newModel[name];
+        });
+        if (fieldSet == 'all' && cachedModel.fieldSet == 'min') {
+          cachedModel.fieldSet = fieldSet;
+        }
+        return cachedModel;
+      } else {
+        this.cache[newModel.id] = newModel;
+        return newModel;
+      }
+    }, this);
   },
-  
-  addToCache: function(item) {
-    this.cache[item.id] = item;
-  },
-  
+
   cached: function(id) {
     return this.cache[id];
   },
-  
+
   cache: {}
 };
 
