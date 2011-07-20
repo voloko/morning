@@ -30,3 +30,7 @@ a:visited {
 .hidden {
   display: none !important;
 }
+
+.m-container {
+  min-height: 100px;
+}

@@ -29,8 +29,8 @@ p.compose = function() {
     { fragment: true, children: [
       { tag: 'div', className: 'm-post-counts-nub' },
       { tag: 'div', className: 'm-post-counts-bar', children: [
-        likes && { tag: 'span', className: 'm-post-counts-likes', text: formatLikes(likes) },
-        comments && { tag: 'span', className: 'm-post-counts-comments', text: formatComments(comments) }
+        likes && { tag: 'span', className: 'm-post-counts-likes', text: formatLikes(likes), as: 'likes' },
+        comments && { tag: 'span', className: 'm-post-counts-comments', text: formatComments(comments), as: 'comments' }
       ] }
     ] }
   );

@@ -5,6 +5,8 @@ module.exports = {
   'dtr:n1hr': '1 hour ago',
   'dtr:nhr': '{number} hours ago',
   'dtr:now': 'a few seconds ago',
+  'dtr:today': 'Today at {time}',
+  'dtr:yesterday': 'Yesterday at {time}',
   'dta:jan': 'Jan',
   'dta:feb': 'Feb',
   'dta:mar': 'Mar',

@@ -8,6 +8,19 @@ var p = Post.prototype;
 
 p.defaultClassName = 'm-post';
 
+p.updateCounts = function() {
+  if (this.value.hasCommentsOrLikes) {
+    if (this.refs.counts) {
+      this.refs.counts.value = this.value;
+    } else {
+      this.refs.more.parentNode.insertBefore(
+        v({ view: require('./counts'), value: this.value, as: 'counts' }, this.refs).dom,
+        this.refs.more
+      );
+    }
+  }
+};
+
 p.composeFrom = function() {
   u.cls.add(this, 'm-post_with-icon', !this.value.message);
   if (this.value.actor) {
@@ -30,13 +43,20 @@ p.composeContent = function() {
     this.composeVoice(),
     { text: ' ' },
     this.composeMessage(),
-    attachment.media && { view: require('./attachment'), value: this.value.attachment },
+
+    attachment.media &&
+      { view: require('./attachment'), value: this.value.attachment },
+
     { tag: 'div', className: 'm-post-actions', children: [
       { view: require('../timestamp/timestamp'), value: this.value.time }
     ] },
-    this.value.hasCommentsOrLikes && { view: require('./counts'), value: this.value },
-    { tag: 'a', className: 'm-post-more', href: '#' }
-  ] });
+
+    this.value.hasCommentsOrLikes &&
+      { view: require('./counts'), value: this.value, as: 'counts' },
+
+    { tag: 'a', className: 'm-post-more', href: '#', as: 'more',
+      'data-goTo': { name: 'post', options: { id: this.value.id } } }
+  ] }, this.refs);
 };
 
 p.composeVoice = function() {
@@ -58,6 +78,7 @@ p.composeMessage = function() {
 };
 
 p.compose = function() {
+  this.refs = {};
   return v({ fragment: true, children: [
     this.composeFrom(),
     this.composeContent()

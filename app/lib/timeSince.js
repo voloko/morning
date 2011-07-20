@@ -9,7 +9,8 @@ var SHORT_MONTH_NNAMES = [
 ];
 
 module.exports = function(dt) {
-  var elapsed = (+new Date() - dt.getTime())/1000;
+  var now = new Date();
+  var elapsed = (now - dt.getTime())/1000;
   
   if (elapsed < MINUTE) {
     return tx('dtr:now');
@@ -27,8 +28,17 @@ module.exports = function(dt) {
   if (hours == 1) {
     return tx('dtr:n1hr');
   }
-  if (hours > 12) {
+  if (hours < 12) {
     return tx('dtr:nhr', { number: hours });
+  }
+  
+  if (hours < 24) {
+    var time = dt.getHours() + ':' + dt.getMinutes();
+    if (dt.getDate() == now.getDate()) {
+      return tx('dtr:today', {time: time});
+    } else {
+      return tx('dtr:yesterday', {time: time});
+    }
   }
   
   return dt.getDate() + ' ' + SHORT_MONTH_NNAMES[dt.getMonth()];
