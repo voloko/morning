@@ -8,7 +8,7 @@ p.show = function(container, options) {
   this.refs = {};
   this.container = container;
   this.container.appendChild(
-    v({ view: require('../view/post/post'), as: 'post' }, this.refs).dom
+    v({ view: require('../view/post/standalonePost'), as: 'post' }, this.refs).dom
   );
   var postView = this.refs.post;
 

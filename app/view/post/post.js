@@ -6,7 +6,7 @@ var u = require('../../../muv/u');
 var Post = module.exports = require('../composable').createClass();
 var p = Post.prototype;
 
-p.defaultClassName = 'm-post';
+p.defaultClassName = 'm-post m-post_stream';
 
 p.updateCounts = function() {
   if (this.value.hasCommentsOrLikes) {
@@ -51,12 +51,19 @@ p.composeContent = function() {
       { view: require('../timestamp/timestamp'), value: this.value.time }
     ] },
 
-    this.value.hasCommentsOrLikes &&
-      { view: require('./counts'), value: this.value, as: 'counts' },
-
-    { tag: 'a', className: 'm-post-more', href: '#', as: 'more',
-      'data-goTo': { name: 'post', options: { id: this.value.id } } }
+    this.composeCounts(),
+    this.composeActions()
   ] }, this.refs);
+};
+
+p.composeCounts = function() {
+  return this.value.hasCommentsOrLikes &&
+    { view: require('./counts'), value: this.value, as: 'counts' };
+};
+
+p.composeActions = function() {
+  return { tag: 'a', className: 'm-post-more', href: '#', as: 'more',
+    'data-goTo': { name: 'post', options: { id: this.value.id } } };
 };
 
 p.composeVoice = function() {

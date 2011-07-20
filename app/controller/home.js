@@ -38,3 +38,4 @@ p.show = function(container, options) {
 };
 
 p.title = 'Facebook';
+p.isHome = true;

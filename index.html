@@ -10,7 +10,7 @@
 
 <body class="fc">
   <div id="fb-root"></div><script src="http://connect.facebook.net/en_US/all.js"></script>
-  <script type="text/javascript" charset="utf-8" src="./app/app.js"></script>
+  <script type="text/javascript" charset="utf-8" src="/app/app.js"></script>
   <script type="text/javascript" charset="utf-8">
     app.init();
   </script>
@@ -20,7 +20,7 @@
       FB.init({appId: appId, status: false, cookie: true, xfbml: false });
       FB.getLoginStatus(function(response) {
         if (!response.perms) {
-          location.href = './login.html';
+          location.href = '/login.html';
         } else {
           app.apiReady();
         }

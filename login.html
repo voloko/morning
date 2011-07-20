@@ -17,11 +17,11 @@
     var appId = location.host.match(/localhost/) ? '142936615786776' : '221956687842012';
     FB.init({appId: appId, status: false, cookie: true, xfbml: true });
     FB.Event.subscribe('auth.login', function(response) {
-      location.href = './';
+      location.href = '/';
     });
     FB.getLoginStatus(function(response) {
       if (response.perms) {
-        location.href = './';
+        location.href = '/';
       }
     });
   </script>

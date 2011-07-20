@@ -37,12 +37,11 @@ app.init = function() {
   });
 
   setTimeout(function() {
-    app.goTo('home');
+    extactStateFromUrl();
     alignWindow();
   });
 };
 
-u.delegate.prop(app, 'title', 'navbar');
 
 app.apiReady = function() {
   require('./lib/api').init();
@@ -53,7 +52,7 @@ app.goTo = function(name, options, restoredFromHistory) {
   if (!restoredFromHistory) {
     var url = buildUrl(name, options);
     var state = { name: name, options: options };
-    state.view = { scrollTop: document.body.scrollTop };
+    state.viewport = { scrollTop: document.body.scrollTop };
     if (!controller) {
       history.replaceState(state, null, url);
     } else if (url != location.pathname) {
@@ -75,7 +74,9 @@ app.goTo = function(name, options, restoredFromHistory) {
     controllers[name] = controller = new controllerClass();
     controller.show(container, options);
   }
-  document.title = app.title = controller.title;
+  document.title = controller.title;
+  app.navbar.title = controller.isHome ? '' : controller.title;
+  app.navbar.isHome = controller.isHome;
   if (!restoredFromHistory) {
     alignWindow();
   }
@@ -91,7 +92,7 @@ window.addEventListener('popstate', function(e) {
 });
 
 function buildUrl(name, options) {
-  if (name === 'home') return '/index.html';
+  if (name === 'home') return '/';
   var parts = [];
   for (var i in options) {
     var value = options[i];
@@ -100,6 +101,20 @@ function buildUrl(name, options) {
     }
   }
   return '/' + name + '/' + (parts.length ? '?' + parts.join('&') : '');
+}
+
+function extactStateFromUrl() {
+  var name = location.pathname.replace(/\//g, '');
+  var options = {};
+  location.search.split(/\?|&/).forEach(function(pair) {
+    if (pair) {
+      var match = pair.match(/([^=]+)=(.*)/);
+      options[decodeURIComponent(match[1])] = decodeURIComponent(match[2]);
+    }
+  });
+
+  var controller = getController(name);
+  controller ? app.goTo(name, options) : app.goTo('home');
 }
 
 function getController(name) {
