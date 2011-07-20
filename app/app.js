@@ -5,7 +5,7 @@ var u = require('../muv/u');
 var app = global.app = module.exports = {};
 
 var controllers = {};
-var controller = null;
+var currentController = null;
 
 app.init = function() {
   var refs = {};
@@ -17,6 +17,9 @@ app.init = function() {
   document.body.appendChild(
     v({ fragment: true, children: [
       { view: require('./view/navbar/navbar'), as: 'navbar' },
+      { tag: 'div', style: 'overflow-x: hidden', children: [
+        { tag: 'div', className: 'm-container', as: 'container' }
+      ]},
       { view: require('./view/footer/footer'), as: 'footer' }
     ]}, app)
   );
@@ -29,7 +32,7 @@ app.init = function() {
       var data = target['data-goTo'];
       if (data) {
         e.preventDefault();
-        app.goTo(data.name, data.options);
+        app.goTo(data.name, data.options, true);
         break;
       }
       target = target.parentNode;
@@ -42,54 +45,81 @@ app.init = function() {
   });
 };
 
+app.state = { meta: {} };
 
 app.apiReady = function() {
   require('./lib/api').init();
 };
 
-app.goTo = function(name, options, restoredFromHistory) {
-  options = options || {};
-  if (!restoredFromHistory) {
-    var url = buildUrl(name, options);
-    var state = { name: name, options: options };
-    state.viewport = { scrollTop: document.body.scrollTop };
-    if (!controller) {
-      history.replaceState(state, null, url);
-    } else if (url != location.pathname) {
-      history.pushState(state, null, url);
-    }
-  }
-  if (controller) {
-    controller.container.parentNode.removeChild(controller.container);
-  }
-
-  if (controllers[name]) {
-    controller = controllers[name];
-    document.body.insertBefore(controller.container, app.footer.dom);
-    controller.update(options);
+app.goBack = function() {
+  if (currentController.isHome) { return; }
+  if (!currentController.isFirst) {
+    app.goTo(currentController.parentStateName, currentController.parentStateOptions, false);
   } else {
-    var container = v({ tag: 'div', className: 'm-container' });
-    document.body.insertBefore(container, app.footer.dom);
-    var controllerClass = getController(name);
-    controllers[name] = controller = new controllerClass();
-    controller.show(container, options);
-  }
-  document.title = controller.title;
-  app.navbar.title = controller.isHome ? '' : controller.title;
-  app.navbar.isHome = controller.isHome;
-  if (!restoredFromHistory) {
-    alignWindow();
+    history.back();
   }
 };
 
-window.addEventListener('load', alignWindow);
-
 window.addEventListener('popstate', function(e) {
   if (e.state) {
-    app.goTo(e.state.name, e.state.options, true);
-    document.body.scrollTop = e.state.viewport.scrollTop;
+    var isForward = e.state.meta.guid > app.state.meta.guid;
+    app.state = e.state;
+    app.transitionTo(e.state.name, e.state.options, isForward);
   }
 });
+
+
+app.storeState = function(name, options, firstTime) {
+  var url = buildUrl(name, options);
+  var state = { name: name, options: options };
+  state.meta = { guid: u.guid++ };
+  if (firstTime) {
+    history.replaceState(state, null, url);
+  } else if (url != location.pathname) {
+    history.pushState(state, null, url);
+  }
+  app.state = state;
+};
+
+app.transitionTo = function(name, options, isForward) {
+  var newController = app.getController(name, options);
+  app.container.appendChild(controllers[name].container, app.footer.dom);
+  if (!currentController) {
+    currentController = newController;
+  } else {
+    var transition = require('./lib/transition');
+    currentController.transitionOutStart();
+    newController.transitionInStart();
+
+    transition(currentController.container, newController.container, isForward, function() {
+      currentController.container.parentNode.removeChild(currentController.container);
+      currentController.transitionOutEnd();
+      newController.transitionInEnd();
+      currentController = newController;
+    });
+  }
+  app.navbar.title = newController.isHome ? '' : newController.title;
+  document.title = newController.title;
+};
+
+app.getController = function(name, options) {
+  if (controllers[name]) {
+    controllers[name].update(options);
+  } else {
+    var container = v({ tag: 'div' });
+    var controllerClass = getControllerClass(name);
+    controllers[name] = new controllerClass();
+    controllers[name].show(container, options);
+  }
+  return controllers[name];
+};
+
+app.goTo = function(name, options, isForward) {
+  app.storeState(name, options);
+  app.transitionTo(name, options, isForward);
+};
+
+window.addEventListener('load', alignWindow);
 
 function buildUrl(name, options) {
   if (name === 'home') return '/';
@@ -113,11 +143,16 @@ function extactStateFromUrl() {
     }
   });
 
-  var controller = getController(name);
-  controller ? app.goTo(name, options) : app.goTo('home');
+  var controller = getControllerClass(name);
+  if (!controller) {
+    name = 'home';
+    options = {};
+  }
+  app.storeState(name, options, true);
+  app.goTo(name, options);
 }
 
-function getController(name) {
+function getControllerClass(name) {
   switch(name) {
     case 'home': return require('./controller/home');
     case 'post': return require('./controller/post');

@@ -17,7 +17,7 @@ p._createDom = function() {
   ] }, this.refs);
   this.refs.back.addEventListener('click', u.bindOnce(function(e) {
     e.preventDefault();
-    if (!this.isHome) { history.back() };
+    require('../../app').goBack();
   }, this));
 };
 
@@ -34,8 +34,5 @@ Object.defineProperty(p, 'title', {
 Object.defineProperty(p, 'isHome', {
   set: function(value) {
     u.cls.toggle(this, 'm-navbar_home', !!value);
-  },
-  get: function() {
-    return u.cls.has(this, 'm-navbar_home');
   }
 });
