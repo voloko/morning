@@ -62,14 +62,15 @@ p.assimilatePosts = function(posts) {
     var children = [].slice.call(this.children, 1);
     for (var i = 0; i < posts.length; i++) {
       while (this.posts[j] && this.posts[j].created_time > posts[i].created_time) {
-        newPosts.push(this.posts[j]);
         groups[++j] = [];
+      }
+      if (!this.posts[j] && !groups[j]) {
+        groups[j] = [];
       }
       if (this.posts[j] && posts[i].id == this.posts[j].id) {
         v.nearest(children[j]).updateCounts();
       } else {
         groups[j].push(posts[i]);
-        newPosts.push(posts[i]);
       }
     }
     for (i = 0; i < groups.length; i++) {
@@ -78,7 +79,11 @@ p.assimilatePosts = function(posts) {
         this.insertBefore(v({ fragment: true, children: postsToViews(group) }), children[i]);
       }
     }
-    this.posts = newPosts;
+    this.posts = [];
+    for (i = 0; i < this.children.length; i++) {
+      var view = v.nearest(this.children[i]);
+      view.value && this.posts.push(view.value);
+    };
   } else {
     this.posts = this.posts.concat(posts);
     this.insertBefore(v({ fragment: true, children: postsToViews(posts) }), this.refs.more);

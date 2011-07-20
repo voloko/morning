@@ -9,17 +9,26 @@ p.update = function(options) {};
 
 p.transitionOutStart = function() {
   this.scrollTop = document.body.scrollTop;
+  // this.container.style.marginTop = -this.scrollTop + 'px';
+  // document.body.scrollTop = 0;
 };
 
-p.transitionOutEnd = function() {};
+p.transitionOutEnd = function() {
+  // this.container.style.marginTop = 0;
+};
 
-p.transitionInStart = function() {};
+p.transitionInStart = function() {
+  var scrollTop = this.scrollTop || 1;
+  this.container.style.top = (document.body.scrollTop - this.scrollTop) + 'px';
+};
 
 p.transitionInEnd = function() {
   var scrollTop = this.scrollTop || 1;
+  var container = this.container;
+  container.style.top = '';
   setTimeout(function() {
     document.body.scrollTop = scrollTop;
-  }, 1);
+  }, 1)
 };
 
 p.parentStateName = 'home';

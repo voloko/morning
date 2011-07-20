@@ -10,30 +10,22 @@ function tableToSyncer(table) {
 
 var TTL = 1000*60*60*24*7; // cache for a week
 
-function restoreCache() {
+function gc() {
   var re = /^c:(.*)/;
   var now = + new Date;
   for (var key in storage) {
     var match = key.match(re);
     if (match) {
-      try {
-        var row = JSON.parse(storage[key]);
-        if (now - row[0] > TTL) {
-          delete storage[key];
-        } else {
-          var syncer = tableToSyncer(row[1]);
-          var model = syncer ? new syncer.model(row[2]) : row[2];
-          Sync.cache[model.id] = model;
-        }
-      } catch(e) { console.log(e); }
+      var row = JSON.parse(storage[key]);
+      if (now - row[0] > TTL) {
+        delete storage[key];
+      }
     }
   }
 }
 
 
 var Sync = {
-  restoreCache: restoreCache,
-
   model: null,
 
   fqlTable: '',
@@ -92,6 +84,17 @@ var Sync = {
   },
 
   cached: function(id) {
+    if (!this.cache[id]) {
+      var key = 'c:' + id;
+      if (storage[key]) {
+        try {
+          var row = JSON.parse(storage[key]);
+          var syncer = tableToSyncer(row[1]);
+          var model = syncer ? new syncer.model(row[2]) : row[2];
+          this.cache[model.id] = model;
+        } catch(e) {}
+      }
+    };
     return this.cache[id];
   },
 

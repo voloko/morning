@@ -10,6 +10,10 @@ p.show = function(container, options) {
   this.container.appendChild(
     v({ view: require('../view/post/standalonePost'), as: 'post' }, this.refs).dom
   );
+  this.update(options);
+};
+
+p.update = function(options) {
   var postView = this.refs.post;
 
   var postSync = require('../sync/postSync');

@@ -24,8 +24,6 @@ app.init = function() {
     ]}, app)
   );
 
-  require('sync/postSync').restoreCache();
-
   document.body.addEventListener('click', function(e) {
     var target = e.target;
     while (target) {
@@ -90,8 +88,7 @@ app.transitionTo = function(name, options, isForward) {
     var transition = require('./lib/transition');
     currentController.transitionOutStart();
     newController.transitionInStart();
-
-    transition(currentController.container, newController.container, isForward, function() {
+    transition(app.container, currentController.container, newController.container, isForward, function() {
       currentController.container.parentNode.removeChild(currentController.container);
       currentController.transitionOutEnd();
       newController.transitionInEnd();
@@ -99,6 +96,7 @@ app.transitionTo = function(name, options, isForward) {
     });
   }
   app.navbar.title = newController.isHome ? '' : newController.title;
+  app.navbar.isHome = newController.isHome;
   document.title = newController.title;
 };
 
@@ -118,8 +116,6 @@ app.goTo = function(name, options, isForward) {
   app.storeState(name, options);
   app.transitionTo(name, options, isForward);
 };
-
-window.addEventListener('load', alignWindow);
 
 function buildUrl(name, options) {
   if (name === 'home') return '/';

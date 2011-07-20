@@ -41,7 +41,7 @@ Sync.fetchHome = function(options, callback) {
   api.multiquery(buildMultiquery(
     'WHERE filter_key IN ("others", "owner")' +
     (options.after ? ' AND created_time < ' + options.after : '') +
-    ' LIMIT ' + options.limit || 25
+    ' LIMIT ' + options.limit || 25 + ' ORDER BY created_time'
   ), function(r) {
     var posts = Sync.createAndCacheModels('all', r.posts, !options.after);
     require('./pageSync').createAndCacheModels('min', r.pages, true);
