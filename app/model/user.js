@@ -1,7 +1,7 @@
-var m = require('../../muv/m');
-var u = require('../../muv/u');
+var m = require('muv/m');
+var u = require('muv/u');
 
-var User = require('./base').createClass();
+var User = module.exports = require('./base').createClass();
 var p = User.prototype;
 
 var obj = {};
@@ -72,6 +72,3 @@ u.alias.prop(p, 'profile_url', 'url');
 u.alias.prop(p, 'uid', 'id');
 // remove id as real prop
 p.propNames = p.propNames.slice(1);
-
-
-module.exports = User;

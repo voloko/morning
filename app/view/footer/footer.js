@@ -1,6 +1,6 @@
 requireCss('./footer.css');
 
-var v = require('../../../muv/v');
+var v = require('muv/v');
 
 var Footer = module.exports = v.Base.createClass();
 var p = Footer.prototype;

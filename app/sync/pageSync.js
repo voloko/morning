@@ -1,9 +1,9 @@
-var u = require('../../muv/u');
-var api = require('../lib/api');
+var u = require('muv/u');
+var api = require('app/lib/api');
 var Base = require('./baseSync');
 
 var Sync = u.extend({}, Base, {
-  model: require('../model/page'),
+  model: require('app/model/page'),
 
   fqlTable: 'page',
 

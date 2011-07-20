@@ -1,6 +1,6 @@
 requireCss('./transition.css');
 
-var u = require('../../muv/u');
+var u = require('muv/u');
 
 module.exports = function(wrapper, a, b, isForward, callback) {
   if (a.style.webkitTransform === undefined) {

@@ -6,7 +6,7 @@ function urlize(string, textProcessor, linkProcessor) {
 }
 
 module.exports = function(string) {
-  var u = require('../../muv/u');
+  var u = require('muv/u');
   return urlize(string, u.escapeHTML, function(link) {
     link = u.escapeHTML(link);
     return '<a href="' + link + '" target="_blank">' + link + '</a>';

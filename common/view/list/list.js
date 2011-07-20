@@ -1,6 +1,6 @@
 requireCss('./list.css');
 
-var v = require('../../../muv/v');
+var v = require('muv/v');
 
 v.List = v.Base.createClass();
 var p = v.List.prototype;

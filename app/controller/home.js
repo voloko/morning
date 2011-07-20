@@ -1,5 +1,5 @@
-var v = require('../../muv/v');
-var u = require('../../muv/u');
+var v = require('muv/v');
+var u = require('muv/u');
 
 var Home = module.exports = u.createClass(require('./base'));
 var p = Home.prototype;
@@ -8,10 +8,10 @@ p.show = function(container, options) {
   this.refs = {};
   this.container = container;
   this.container.appendChild(
-    v({ view: require('../view/stream/stream'), as: 'stream', loading: true }, this.refs).dom
+    v({ view: require('app/view/stream/stream'), as: 'stream', loading: true }, this.refs).dom
   );
 
-  var postSync = require('../sync/postSync');
+  var postSync = require('app/sync/postSync');
   var posts = postSync.getHomeFromCache();
   var stream = this.refs.stream;
   if (posts) {

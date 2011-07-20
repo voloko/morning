@@ -1,6 +1,6 @@
 requireCss('./app.css');
-var v = require('../muv/v');
-var u = require('../muv/u');
+var v = require('muv/v');
+var u = require('muv/u');
 
 var app = global.app = module.exports = {};
 

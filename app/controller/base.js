@@ -1,4 +1,4 @@
-var u = require('../../muv/u');
+var u = require('muv/u');
 
 
 var Base = module.exports = function() {};
@@ -9,12 +9,9 @@ p.update = function(options) {};
 
 p.transitionOutStart = function() {
   this.scrollTop = document.body.scrollTop;
-  // this.container.style.marginTop = -this.scrollTop + 'px';
-  // document.body.scrollTop = 0;
 };
 
 p.transitionOutEnd = function() {
-  // this.container.style.marginTop = 0;
 };
 
 p.transitionInStart = function() {

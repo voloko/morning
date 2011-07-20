@@ -1,19 +1,22 @@
 var util    = require('util'),
+    path    = require('path'),
     express = require('express'),
     sr      = require('./static_require'),
     url     = require('url'),
     pro     = require('uglify-js').uglify,
     app     = express.createServer();
-    
+
+var root = path.normalize(path.join(__dirname, '..'));
+
 function init() {
     app.get('/*.js', sr.getHandler({
-        searchPaths: []
+        searchPaths: [root]
     }));
 
     app.get('/login.html', function(req, res) {
         res.sendfile('/login.html');
     });
-    
+
     app.get('/favicon.ico', function(req, res) {
         res.sendfile(req.param(0))
     });

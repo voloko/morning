@@ -1,4 +1,4 @@
-var v = require('../../muv/v');
+var v = require('muv/v');
 
 var Composable = v.Base.createClass();
 var p = Composable.prototype;

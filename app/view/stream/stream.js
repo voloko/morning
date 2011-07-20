@@ -1,8 +1,8 @@
 requireCss('./stream.css');
 
-var v = require('../../../muv/v');
-var u = require('../../../muv/u');
-var Post = require('../post/post');
+var v = require('muv/v');
+var u = require('muv/u');
+var Post = require('app/view/post/post');
 
 var Stream = v.Base.createClass();
 var p = Stream.prototype;

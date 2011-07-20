@@ -1,7 +1,7 @@
 requireCss('./timestamp.css');
 
-var timeSince = require('../../lib/timeSince');
-var v = require('../../../muv/v');
+var timeSince = require('app/lib/timeSince');
+var v = require('muv/v');
 
 var Timestamp = module.exports = v.Base.createClass();
 var p = Timestamp.prototype;

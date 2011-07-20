@@ -1,8 +1,8 @@
 requireCss('./loading.css');
 
-var v = require('../../../muv/v');
-var u = require('../../../muv/u');
-var tx = require('../../lib/tx');
+var v = require('muv/v');
+var u = require('muv/u');
+var tx = require('app/lib/tx');
 
 var Loading = module.exports = v.Base.createClass();
 var p = Loading.prototype;

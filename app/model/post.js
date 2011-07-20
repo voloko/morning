@@ -1,7 +1,7 @@
-var m = require('../../muv/m');
-var u = require('../../muv/u');
+var m = require('muv/m');
+var u = require('muv/u');
 
-var Post = require('./base').createClass();
+var Post = module.exports = require('./base').createClass();
 var p = Post.prototype;
 
 var obj = {};
@@ -36,17 +36,17 @@ Object.defineProperties(p, {
   actor: { 
     configurable: true,
     get: function() {
-      return require('../sync/baseSync').cached(this.actor_id);
+      return require('app/sync/baseSync').cached(this.actor_id);
     } },
   target: { 
     configurable: true,
     get: function() {
-      return require('../sync/baseSync').cached(this.target_id);
+      return require('app/sync/baseSync').cached(this.target_id);
     } },
   source: { 
     configurable: true,
     get: function() {
-      return require('../sync/baseSync').cached(this.source_id);
+      return require('app/sync/baseSync').cached(this.source_id);
     } },
   hasCommentsOrLikes: {
     get: function() {
@@ -58,9 +58,3 @@ Object.defineProperties(p, {
 u.alias.prop(p, 'post_id', 'id');
 // remove id as real prop
 p.propNames = p.propNames.slice(1);
-
-
-
-
-
-module.exports = Post;

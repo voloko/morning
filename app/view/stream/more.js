@@ -1,8 +1,8 @@
 requireCss('./more.css');
 
-var v = require('../../../muv/v');
-var u = require('../../../muv/u');
-var tx = require('../../lib/tx');
+var v = require('muv/v');
+var u = require('muv/u');
+var tx = require('app/lib/tx');
 
 var More = module.exports = v.Base.createClass();
 var p = More.prototype;

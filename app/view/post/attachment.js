@@ -1,11 +1,11 @@
 requireCss('./post.css');
 requireCss('./attachment.css');
-requireCss('./../image-block/image-block.css');
+requireCss('../image-block/image-block.css');
 
-var v = require('../../../muv/v');
-var u = require('../../../muv/u');
+var v = require('muv/v');
+var u = require('muv/u');
 
-var PostAttachment = module.exports = require('../composable').createClass();
+var PostAttachment = module.exports = require('app/view/composable').createClass();
 var p = PostAttachment.prototype;
 
 p.defaultClassName = 'm-post-attch m-image-block';

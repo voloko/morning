@@ -1,7 +1,7 @@
 requireCss('./navbar.css');
 
-var v = require('../../../muv/v');
-var u = require('../../../muv/u');
+var v = require('muv/v');
+var u = require('muv/u');
 
 var NavBar = module.exports = v.Base.createClass();
 var p = NavBar.prototype;
@@ -17,7 +17,7 @@ p._createDom = function() {
   ] }, this.refs);
   this.refs.back.addEventListener('click', u.bindOnce(function(e) {
     e.preventDefault();
-    require('../../app').goBack();
+    require('app/app').goBack();
   }, this));
 };
 

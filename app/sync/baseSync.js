@@ -4,6 +4,7 @@ function tableToSyncer(table) {
     case 'stream': return require('./postSync');
     case 'user': return require('./userSync');
     case 'page': return require('./pageSync');
+    case 'comment': return require('./commentSync');
   }
   return null;
 }

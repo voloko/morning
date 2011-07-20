@@ -1,9 +1,9 @@
 requireCss('./counts.css');
 
-var v = require('../../../muv/v');
-var tx = require('../../lib/tx');
+var v = require('muv/v');
+var tx = require('app/lib/tx');
 
-var PostCounts = module.exports = require('../composable').createClass();
+var PostCounts = module.exports = require('app/view/composable').createClass();
 var p = PostCounts.prototype;
 
 p.defaultClassName = 'm-post-counts';

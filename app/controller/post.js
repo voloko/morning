@@ -1,5 +1,5 @@
-var v = require('../../muv/v');
-var u = require('../../muv/u');
+var v = require('muv/v');
+var u = require('muv/u');
 
 var Post = module.exports = u.createClass(require('./base'));
 var p = Post.prototype;
@@ -8,7 +8,7 @@ p.show = function(container, options) {
   this.refs = {};
   this.container = container;
   this.container.appendChild(
-    v({ view: require('../view/post/standalonePost'), as: 'post' }, this.refs).dom
+    v({ view: require('app/view/post/standalonePost'), as: 'post' }, this.refs).dom
   );
   this.update(options);
 };
@@ -16,7 +16,9 @@ p.show = function(container, options) {
 p.update = function(options) {
   var postView = this.refs.post;
 
-  var postSync = require('../sync/postSync');
+  var postSync = require('app/sync/postSync');
+  var commentSync = require('app/sync/commentSync');
+  
   var post = postSync.getPostFromCache(options.id);
   if (post) {
     postView.value = post;

@@ -1,9 +1,9 @@
 requireCss('./post.css');
 
-var v = require('../../../muv/v');
-var u = require('../../../muv/u');
+var v = require('muv/v');
+var u = require('muv/u');
 
-var Post = module.exports = require('../composable').createClass();
+var Post = module.exports = require('app/view/composable').createClass();
 var p = Post.prototype;
 
 p.defaultClassName = 'm-post m-post_stream';
@@ -48,7 +48,7 @@ p.composeContent = function() {
       { view: require('./attachment'), value: this.value.attachment },
 
     { tag: 'div', className: 'm-post-actions', children: [
-      { view: require('../timestamp/timestamp'), value: this.value.time }
+      { view: require('app/view/timestamp/timestamp'), value: this.value.time }
     ] },
 
     this.composeCounts(),
@@ -81,7 +81,7 @@ p.composeVoice = function() {
 };
 
 p.composeMessage = function() {
-  return v({ tag: 'span', innerHTML: require('../../lib/urlize')(this.value.message) });
+  return v({ tag: 'span', innerHTML: require('app/lib/urlize')(this.value.message) });
 };
 
 p.compose = function() {
@@ -92,7 +92,3 @@ p.compose = function() {
   ] });
 };
 
-
-function profilePic(id) {
-  return '//graph.facebook.com/' + id + '/picture';
-}
