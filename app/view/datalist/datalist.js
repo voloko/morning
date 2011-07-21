@@ -60,6 +60,8 @@ p.itemsToViews = function(items) {
   });
 };
 
+p.updateExistingView = function(view, item) {};
+
 p.assimilate = function(items) {
   if (this.items.length) {
     var groups = [[]];
@@ -73,7 +75,7 @@ p.assimilate = function(items) {
         groups[j] = [];
       }
       if (this.items[j] && items[i].id == this.items[j].id) {
-        v.nearest(children[j]).updateCounts();
+        this.updateView(children[j], this.items[j]);
       } else {
         groups[j].push(items[i]);
       }

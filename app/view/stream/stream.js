@@ -18,3 +18,12 @@ p.itemsToViews = function(items) {
 p._moreView = function() {
   return { view: require('./more'), as: 'more' };
 };
+
+
+p.updateView = function(view, item) {
+  v.nearest(view).updateCounts();
+};
+
+p.updateMissedView = function(view, item) {
+  view.parentNode.removeChild(view);
+};
