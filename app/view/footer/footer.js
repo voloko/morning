@@ -5,7 +5,7 @@ var v = require('muv/v');
 var Footer = module.exports = v.Base.createClass();
 var p = Footer.prototype;
 
-p.defaultClassName = 'm-footer';
+p.defaultClassName = CLS('m-footer');
 
 p._createDom = function() {
   this.dom = v({ tag: 'div', className: this.defaultClassName, children: [

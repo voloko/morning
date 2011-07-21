@@ -6,7 +6,7 @@ var u = require('muv/u');
 var Post = module.exports = require('app/view/composable').createClass();
 var p = Post.prototype;
 
-p.defaultClassName = 'm-post m-post_stream';
+p.defaultClassName = CLS('m-post m-post_stream');
 
 p.updateCounts = function() {
   if (this.value.hasCommentsOrLikes) {
@@ -22,16 +22,16 @@ p.updateCounts = function() {
 };
 
 p.composeFrom = function() {
-  u.cls.add(this, 'm-post_with-icon', !this.value.message);
+  u.cls.add(this, CLS('m-post_with-icon'), !this.value.message);
   if (this.value.actor) {
     return v({
-      tag: 'img', className: "m-post-from-pic",
+      tag: 'img', className: CLS("m-post-from-pic"),
       src: this.value.actor.pic_square
     }, this);
   } else {
     var attachment = this.value.attachment;
     return attachment && attachment.icon && v({
-      tag: 'img', className: "m-post-from-icon",
+      tag: 'img', className: CLS("m-post-from-icon"),
       src: attachment.icon
     }, this);
   }
@@ -39,7 +39,7 @@ p.composeFrom = function() {
 
 p.composeContent = function() {
   var attachment = this.value.attachment;
-  return v({ tag: 'div', className: "m-post-content", children: [
+  return v({ tag: 'div', className: CLS("m-post-content"), children: [
     this.composeVoice(),
     { text: ' ' },
     this.composeMessage(),
@@ -47,7 +47,7 @@ p.composeContent = function() {
     attachment.media &&
       { view: require('./attachment'), value: this.value.attachment },
 
-    { tag: 'div', className: 'm-post-actions', children: [
+    { tag: 'div', className: CLS('m-post-actions'), children: [
       { view: require('app/view/timestamp/timestamp'), value: this.value.time }
     ] },
 
@@ -62,7 +62,7 @@ p.composeCounts = function() {
 };
 
 p.composeActions = function() {
-  return { tag: 'a', className: 'm-post-more', href: '#', as: 'more',
+  return { tag: 'a', className: CLS('m-post-more'), href: '#', as: 'more',
     'data-goTo': { name: 'post', options: { id: this.value.id } } };
 };
 
@@ -72,12 +72,12 @@ p.composeVoice = function() {
 
   if (target) {
     return v({ fragment: true, children: [
-      { tag: 'a', className: 'm-post-actor', text: actor.name, href: actor.url },
-      { tag: 'span', className: 'm-post-arrow', text: ' \u25B6 '},
-      { tag: 'a', className: 'm-post-target', text: target.name, href: target.url }
+      { tag: 'a', className: CLS('m-post-actor'), text: actor.name, href: actor.url },
+      { tag: 'span', className: CLS('m-post-arrow'), text: ' \u25B6 '},
+      { tag: 'a', className: CLS('m-post-target'), text: target.name, href: target.url }
     ] });
   }
-  return actor && v({ tag: 'a', className: 'm-post-actor', text: actor.name, href: actor.url });
+  return actor && v({ tag: 'a', className: CLS('m-post-actor'), text: actor.name, href: actor.url });
 };
 
 p.composeMessage = function() {

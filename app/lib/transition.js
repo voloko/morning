@@ -8,22 +8,21 @@ module.exports = function(wrapper, a, b, isForward, callback) {
     return;
   }
 
-  var cls = isForward ? 'fwd' : 'bwd';
   var offset = a.offsetWidth;
 
-  u.cls.add(wrapper, 'm-transition m-transition_wrapper');
+  u.cls.add(wrapper, CLS('m-transition m-transition_wrapper'));
   b.style.left = (isForward ? offset : -offset) + 'px';
   b.style.width = offset + 'px';
-  u.cls.add(b, 'm-transition_in');
+  u.cls.add(b, CLS('m-transition_in'));
 
   wrapper.addEventListener('webkitTransitionEnd', function end() {
     wrapper.removeEventListener('webkitTransitionEnd', end);
     callback();
-    u.cls.remove(wrapper, 'm-transition');
+    u.cls.remove(wrapper, CLS('m-transition'));
     wrapper.style.WebkitTransform = '';
     b.style.left = '';
     b.style.width = '';
-    u.cls.remove(b, 'm-transition_in');
+    u.cls.remove(b, CLS('m-transition_in'));
   });
 
   setTimeout(function() {

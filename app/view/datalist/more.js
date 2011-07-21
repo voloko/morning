@@ -6,7 +6,7 @@ var u = require('muv/u');
 var More = module.exports = v.Base.createClass();
 var p = More.prototype;
 
-p.defaultClassName = 'm-datalist-more';
+p.defaultClassName = CLS('m-datalist-more');
 
 p._createDom = function() {
   this.refs = {};
@@ -14,7 +14,7 @@ p._createDom = function() {
     tag: 'a', href: '#', className: p.defaultClassName, children: [
       { text: this._moreText(), as: 'text' },
       { text: ' ' },
-      { tag: 'i', className: 'm-datalist-more-loader' }
+      { tag: 'i', className: CLS('m-datalist-more-loader') }
     ]
   }, this.refs);
 
@@ -34,13 +34,13 @@ p._loadingText = function() {
 
 Object.defineProperty(p, 'isLoading', {
   get: function() {
-    return u.cls.has(this, 'm-datalist-more_loading');
+    return u.cls.has(this, CLS('m-datalist-more_loading'));
   },
   set: function(value) {
     var text = this.refs.text;
     text.parentNode.replaceChild(
       v({ text: value ? this._loadingText() : this._moreText(), as: 'text' }, this.refs),
       text);
-    u.cls.toggle(this, 'm-datalist-more_loading', !!value);
+    u.cls.toggle(this, CLS('m-datalist-more_loading'), !!value);
   }
 })

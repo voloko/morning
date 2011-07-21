@@ -22,8 +22,17 @@ m.defineProperties(p, {
 
 
 Object.defineProperties(p, {
-  order: { 
+  order: {
     configurable: true,
     get: function() {
       return this.created_time*1;
-    } } } );
+    } },
+  
+  from: {
+    configurable: true,
+    get: function() {
+      return require('app/sync/baseSync').cached(this.fromid);
+    }
+  }
+
+} );

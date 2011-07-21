@@ -6,7 +6,7 @@ var tx = require('app/lib/tx');
 var PostCounts = module.exports = require('app/view/composable').createClass();
 var p = PostCounts.prototype;
 
-p.defaultClassName = 'm-post-counts';
+p.defaultClassName = CLS('m-post-counts');
 
 p._createDom = function(markup) {
   this.dom = v({ tag: 'a' });
@@ -28,10 +28,12 @@ p.compose = function() {
   this.dom['data-goTo'] = { name: 'post', options: { id: this.value.id } };
   return v(
     { fragment: true, children: [
-      { tag: 'div', className: 'm-post-counts-nub' },
-      { tag: 'div', className: 'm-post-counts-bar', children: [
-        likes && { tag: 'span', className: 'm-post-counts-likes', text: formatLikes(likes), as: 'likes' },
-        comments && { tag: 'span', className: 'm-post-counts-comments', text: formatComments(comments), as: 'comments' }
+      { tag: 'div', className: CLS('m-post-counts-nub') },
+      { tag: 'div', className: CLS('m-post-counts-bar'), children: [
+        likes && { tag: 'span', className: CLS('m-post-counts-likes'),
+          text: formatLikes(likes), as: 'likes' },
+        comments && { tag: 'span', className: CLS('m-post-counts-comments'),
+          text: formatComments(comments), as: 'comments' }
       ] }
     ] }
   );

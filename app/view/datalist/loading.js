@@ -7,7 +7,7 @@ var tx = require('app/lib/tx');
 var Loading = module.exports = v.Base.createClass();
 var p = Loading.prototype;
 
-p.defaultClassName = 'm-datalist-loading';
+p.defaultClassName = CLS('m-datalist-loading');
 
 p._createDom = function() {
   this.refs = {};
@@ -15,7 +15,7 @@ p._createDom = function() {
     tag: 'div', className: p.defaultClassName, children: [
       { text: tx('str:loading'), as: 'text' },
       { text: ' ' },
-      { tag: 'i', className: 'm-datalist-loading-loader' }
+      { tag: 'i', className: CLS('m-datalist-loading-loader') }
     ]
   }, this.refs);
 };

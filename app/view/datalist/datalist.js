@@ -4,7 +4,7 @@ var u = require('muv/u');
 var Datalist = module.exports = v.Base.createClass();
 var p = Datalist.prototype;
 
-p.defaultClassName = 'm-datalist';
+p.defaultClassName = CLS('m-datalist');
 
 p._createDom = function() {
   this.dom = v({ tag: 'div', className: this.defaultClassName, children: [
@@ -17,7 +17,7 @@ p._createDom = function() {
   u.cls.add(this.loading, 'hidden');
   this.more.addEventListener('click', u.bind(function() {
     if (!this.isLoading) {
-      this.trigger({ type: 'loadMore', posts: this.items });
+      this.trigger({ type: 'loadMore', posts: this._items });
     }
   }, this));
 };
@@ -31,7 +31,7 @@ p._moreView = function() {
 };
 
 p._setup = function() {
-  this.items = [];
+  this._items = [];
 };
 
 Object.defineProperties(p, {
@@ -51,6 +51,17 @@ Object.defineProperties(p, {
     get: function() {
       return !u.cls.has(this.more, 'hidden');
     }
+  },
+  items: {
+    set: function(items) {
+      this._items = items || [];
+      this.container.appendChild(
+        v({ fragment: true, children: this._itemsToViews(items) })
+      );
+    },
+    get: function() {
+      return this._items;
+    }
   }
 });
 
@@ -60,22 +71,22 @@ p.itemsToViews = function(items) {
   });
 };
 
-p.updateExistingView = function(view, item) {};
+p._updateExistingView = function(view, item) {};
 
 p.assimilate = function(items) {
-  if (this.items.length) {
+  if (this._items.length) {
     var groups = [[]];
     var j = 0;
     var children = [].slice.call(this.container.children, 0);
     for (var i = 0; i < items.length; i++) {
-      while (this.items[j] && this.items[j].order > items[i].order) {
+      while (this._items[j] && this._items[j].order > items[i].order) {
         groups[++j] = [];
       }
-      if (!this.items[j] && !groups[j]) {
+      if (!this._items[j] && !groups[j]) {
         groups[j] = [];
       }
-      if (this.items[j] && items[i].id == this.items[j].id) {
-        this.updateView(children[j], this.items[j]);
+      if (this._items[j] && items[i].id == this._items[j].id) {
+        this._updateExistingView(children[j], this._items[j]);
       } else {
         groups[j].push(items[i]);
       }
@@ -84,20 +95,17 @@ p.assimilate = function(items) {
       var group = groups[i];
       if (group.length) {
         this.container.insertBefore(
-          v({ fragment: true, children: this.itemsToViews(group) }), children[i]
+          v({ fragment: true, children: this._itemsToViews(group) }), children[i]
         );
       }
     }
-    this.items = [];
+    this._items = [];
     children = this.container.children;
     for (i = 0; i < children.length; i++) {
       var view = v.nearest(children[i]);
-      view.value && this.items.push(view.value);
+      view.value && this._items.push(view.value);
     };
   } else {
-    this.items = this.items.concat(items);
-    this.container.appendChild(
-      v({ fragment: true, children: this.itemsToViews(items) })
-    );
+    this.items = items;
   }
 };

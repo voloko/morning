@@ -5,10 +5,10 @@ var v = require('muv/v');
 v.List = v.Base.createClass();
 var p = v.List.prototype;
 
-p.defaultClassName = 'muv-list';
+p.defaultClassName = CLS('muv-list');
 
 function wrap(child) {
-  return v({ tag: 'li', className: 'muv-list-item', children: [child] });
+  return v({ tag: 'li', className: CLS('muv-list-item'), children: [child] });
 }
 p.appendChild = function(child) {
   this.dom.appendChild(wrap(child));

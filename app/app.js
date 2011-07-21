@@ -18,7 +18,7 @@ app.init = function() {
     v({ fragment: true, children: [
       { view: require('./view/navbar/navbar'), as: 'navbar' },
       { tag: 'div', style: 'overflow-x: hidden', children: [
-        { tag: 'div', className: 'm-container', as: 'container' }
+        { tag: 'div', className: CLS('m-container'), as: 'container' }
       ]},
       { view: require('./view/footer/footer'), as: 'footer' }
     ]}, app)

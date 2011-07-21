@@ -9,7 +9,7 @@ var p = Stream.prototype;
 
 p.defaultClassName = 'm-steam';
 
-p.itemsToViews = function(items) {
+p._itemsToViews = function(items) {
   return items.map(function(post) {
     return { view: Post, value: post };
   });
@@ -19,11 +19,6 @@ p._moreView = function() {
   return { view: require('./more'), as: 'more' };
 };
 
-
-p.updateView = function(view, item) {
+p._updateExistingView = function(view, item) {
   v.nearest(view).updateCounts();
-};
-
-p.updateMissedView = function(view, item) {
-  view.parentNode.removeChild(view);
 };
