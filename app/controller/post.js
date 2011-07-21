@@ -21,7 +21,7 @@ p.show = function(container, options) {
 
     commentSync.fetchForPost(
       this.post.value.id,
-      { limit: 10, after: items[0].time },
+      { limit: 25, offset: items.length },
       u.bind(function(items) {
         this.list.assimilate(items);
         this.list.hasMore = true;
@@ -67,6 +67,7 @@ p._setPost = function(post) {
 };
 
 p._updateActions = function(post) {
+  console.log(this.post.value.comments.count, this.list.items.length);
   this.list.hasMore = this.post.value.comments.count > this.list.items.length;
 };
 

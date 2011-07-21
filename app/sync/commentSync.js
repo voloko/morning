@@ -27,15 +27,16 @@ Sync.fetchForPost = function(postId, options, callback) {
   api.multiquery(buildMultiquery(
     'WHERE post_id = "' + postId + '"' +
     (options.after ? ' AND time < ' + options.after : '') +
-    ' ORDER BY time DESC LIMIT ' + (options.limit || 25)
+    ' ORDER BY time DESC LIMIT ' + (options.limit || 25) +
+    (options.offset ? ' OFFSET ' + options.offset : '') 
   ), function(r) {
-    var comments = Sync.createAndCacheModels('all', r.comments, !options.after);
+    var comments = Sync.createAndCacheModels('all', r.comments, !options.after && !options.offset);
     comments = comments.sort(function(a, b) {
       return a.order - b.order;
     });
     require('./pageSync').createAndCacheModels('min', r.pages, true);
     require('./userSync').createAndCacheModels('min', r.users, true);
-    if (!options.after) {
+    if (!options.after && !options.offset) {
       Base.addToCache({ id: 'request:comments:' + postId, ids: comments.map(function(c) {
         return c.id;
       }) }, true);

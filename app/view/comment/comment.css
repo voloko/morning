@@ -2,6 +2,7 @@
   background-color: #ECEFF5;
   padding: 5px 5px;
   border-bottom: 1px solid #FFF;
+  word-break: break-word;
 }
 
 .m-comment-pic {
