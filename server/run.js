@@ -14,7 +14,7 @@ function init() {
     }));
 
     app.get('/login.html', function(req, res) {
-        res.sendfile('/login.html');
+        res.sendfile('login.html');
     });
 
     app.get('/favicon.ico', function(req, res) {
