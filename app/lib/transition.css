@@ -1,5 +1,9 @@
 .m-transition {
   -webkit-transition: all 0.5s ease-in-out;
+  position: absolute;
+  left: 0;
+  overflow: hidden;
+/*  overflow: hidden;*/
 }
 
 .m-transition_in {

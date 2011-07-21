@@ -30,7 +30,7 @@ app.init = function() {
       var data = target['data-goTo'];
       if (data) {
         e.preventDefault();
-        app.goTo(data.name, data.options, true);
+        app.goTo({ name: data.name, options: data.options }, true);
         break;
       }
       target = target.parentNode;
@@ -51,49 +51,59 @@ app.apiReady = function() {
 
 app.goBack = function() {
   if (currentController.isHome) { return; }
-  if (!currentController.isFirst) {
-    app.goTo(currentController.parentStateName, currentController.parentStateOptions, false);
-  } else {
-    history.back();
-  }
+  var state = currentController.parentState || currentController.defaultParentState;
+  if (state) { app.goTo(state, false); }
 };
 
 window.addEventListener('popstate', function(e) {
   if (e.state) {
     var isForward = e.state.meta.depth > app.state.meta.depth;
     app.state = e.state;
-    app.transitionTo(e.state.name, e.state.options, isForward);
+    app.transitionTo(e.state, isForward);
   }
 });
 
+function generateMeta(deptOffset) {
+  var depth = ('depth' in app.state.meta) ? app.state.meta.depth : 0;
+  return { top: document.body.scrollTop, depth: depth + deptOffset };
+}
 
-app.storeState = function(name, options, isForward, firstTime) {
-  var url = buildUrl(name, options);
-  var state = { name: name, options: options };
-  var depth = 'depth' in app.state.meta ? (app.state.meta.depth + (isForward ? 1 : -1)) : 0;
-  state.meta = { depth: depth };
-  app.state = state;
-  if (firstTime) {
-    history.replaceState(state, null, url);
-  } else if (url != location.pathname) {
-    history.pushState(state, null, url);
-  }
+app.replaceState = function(state) {
+  var meta = generateMeta(0);
+  app.state = { name: state.name, options: state.options, meta: meta };
+  history.replaceState(this.state, null, buildUrl(this.state));
 };
 
-app.transitionTo = function(name, options, isForward) {
-  var newController = app.getController(name, options);
-  app.container.appendChild(controllers[name].container, app.footer.dom);
+app.pushState = function(state, deptOffset) {
+  var meta = generateMeta(1);
+  app.state = { name: state.name, options: state.options, meta: meta };
+  // history.pushState(this.state, null, buildUrl(this.state));
+};
+
+app.transitionTo = function(state, isForward) {
+  state.meta = state.meta || {};
+  var newController = app.getController(state.name, state.options);
+
   if (!currentController || newController === currentController) {
     currentController = newController;
+    app.container.appendChild(newController.container);
+    document.body.scrollTop = state.meta.top;
   } else {
     var transition = require('./lib/transition');
-    currentController.transitionOutStart();
-    newController.transitionInStart();
-    transition(app.container, currentController.container, newController.container, isForward, function() {
-      currentController.container.parentNode.removeChild(currentController.container);
-      currentController.transitionOutEnd();
-      newController.transitionInEnd();
-      currentController = newController;
+    transition(
+      app.container,
+      currentController.container,
+      newController.container,
+      isForward,
+      state.meta.top || 0,
+      function() {
+        currentController = newController;
+        if (isForward) { 
+          newController.parentState = app.state;
+          app.pushState(state); 
+        } else {
+          app.replaceState(state); 
+        }
     });
   }
   app.navbar.title = newController.isHome ? '' : newController.title;
@@ -113,21 +123,21 @@ app.getController = function(name, options) {
   return controllers[name];
 };
 
-app.goTo = function(name, options, isForward) {
-  app.storeState(name, options, isForward);
-  app.transitionTo(name, options, isForward);
+app.goTo = function(state, isForward) {
+  app.replaceState(app.state);
+  app.transitionTo(state, isForward);
 };
 
-function buildUrl(name, options) {
-  if (name === 'home') return '/';
+function buildUrl(state) {
+  if (state.name === 'home') return '/';
   var parts = [];
-  for (var i in options) {
-    var value = options[i];
+  for (var i in state.options) {
+    var value = state.options[i];
     if (u.is.scalar(value)) {
       parts.push(encodeURIComponent(i) + '=' + encodeURIComponent(value));
     }
   }
-  return '/' + name + '/' + (parts.length ? '?' + parts.join('&') : '');
+  return '/' + state.name + '/' + (parts.length ? '?' + parts.join('&') : '');
 }
 
 function extactStateFromUrl() {
@@ -145,8 +155,9 @@ function extactStateFromUrl() {
     name = 'home';
     options = {};
   }
-  app.storeState(name, options, true, true);
-  app.transitionTo(name, options, true);
+  var state = { name: name, options: options };
+  app.replaceState(state, 0);
+  app.transitionTo(state);
 }
 
 function getControllerClass(name) {

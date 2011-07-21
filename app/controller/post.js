@@ -67,7 +67,6 @@ p._setPost = function(post) {
 };
 
 p._updateActions = function(post) {
-  console.log(this.post.value.comments.count, this.list.items.length);
   this.list.hasMore = this.post.value.comments.count > this.list.items.length;
 };
 

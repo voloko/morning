@@ -2,30 +2,49 @@ requireCss('./transition.css');
 
 var u = require('muv/u');
 
-module.exports = function(wrapper, a, b, isForward, callback) {
+module.exports = function(wrapper, a, b, isForward, targetScrollTop, callback) {
   if (a.style.webkitTransform === undefined) {
+    wrapper.appendChild(b);
     callback();
     return;
   }
+  var width = a.offsetWidth;
+  var scrollTop = document.body.scrollTop;
+  var wrapperOffset = wrapper.offsetTop;
+  wrapper.style.cssText +=
+    ';-webkit-transition: -webkit-transform 0.5s ease-in-out;' +
+    'position:absolute;overflow:hidden;' +
+    'top:' + (targetScrollTop) + 'px;height:' + screen.height + 'px;' +
+    'left:' + (isForward ? 0 : -width) + 'px;' +
+    'width:' + 2*width + 'px';
 
-  var offset = a.offsetWidth;
+  a.style.cssText +=
+    ';position:absolute;top:' + (-scrollTop + wrapperOffset) + 'px;' +
+    'left:' + (isForward ? 0 : width) + 'px;' +
+    'width:' + width + 'px';
 
-  u.cls.add(wrapper, CLS('m-transition m-transition_wrapper'));
-  b.style.left = (isForward ? offset : -offset) + 'px';
-  b.style.width = offset + 'px';
-  u.cls.add(b, CLS('m-transition_in'));
-
-  wrapper.addEventListener('webkitTransitionEnd', function end() {
-    wrapper.removeEventListener('webkitTransitionEnd', end);
-    callback();
-    u.cls.remove(wrapper, CLS('m-transition'));
-    wrapper.style.WebkitTransform = '';
-    b.style.left = '';
-    b.style.width = '';
-    u.cls.remove(b, CLS('m-transition_in'));
-  });
+  b.style.cssText +=
+    ';position:absolute;' +
+    'top:' + (wrapperOffset - targetScrollTop) + 'px;' +
+    'left:' + (isForward ? width : 0) + 'px;' +
+    'width:' + width + 'px';
+  wrapper.appendChild(b);
+  
+  document.body.scrollTop = targetScrollTop;
 
   setTimeout(function() {
-    wrapper.style.WebkitTransform = 'translate3d(' + (isForward ? -offset : offset) + 'px, 0, 0)';
+    document.body.scrollTop = targetScrollTop;
+    wrapper.style.WebkitTransform = 'translate3d(' + (isForward ? -width : width) + 'px, 0, 0)';
   }, 1);
+  
+  wrapper.addEventListener('webkitTransitionEnd', function end() {
+    wrapper.removeEventListener('webkitTransitionEnd', end);
+    a.parentNode.removeChild(a);
+    a.style.position = a.style.width = a.style.height = a.style.left = '';
+    b.style.position = b.style.width = b.style.height = b.style.left = '';
+    wrapper.style.WebkitTransition = wrapper.style.WebkitTransform =
+      wrapper.style.position = wrapper.style.width = wrapper.style.height = '';
+    callback();
+  });
+
 };
