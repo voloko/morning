@@ -168,7 +168,7 @@ function generateNext(cur) {
     for (var i = cur.length - 1; i > -1; i--) {
         var index = CHARS.indexOf(cur.charAt(i));
         if (index < CHARS.length - 1) {
-            return cur.substr(0, i - 1) + CHARS.charAt(index + 1) + cur.substr(i + 1);
+            return cur.substr(0, i) + CHARS.charAt(index + 1) + cur.substr(i + 1);
         }
     }
     var result = '';

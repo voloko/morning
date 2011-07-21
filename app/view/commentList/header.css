@@ -1,0 +1,26 @@
+.m-comment-header-line {
+  border-bottom: 1px solid #D6DDEB;
+  height: 3px;
+  position: relative;
+}
+
+.m-comment-header-nub {
+  position: absolute;
+  width: 20px;
+  height: 10px;
+  left: 10px;
+  bottom: -1px;
+  background: url(nub.png);
+}
+
+.m-comment-header-likes {
+  background-color: #ECEFF5;
+  padding: 5px 5px;
+  border-bottom: 1px solid #FFF;
+}
+
+.m-comment-header-like-number {
+  font-weight: bold;
+  padding-left: 16px;
+  margin-left: 2px;
+}

@@ -67,22 +67,23 @@ window.addEventListener('popstate', function(e) {
 });
 
 
-app.storeState = function(name, options, firstTime) {
+app.storeState = function(name, options, isForward, firstTime) {
   var url = buildUrl(name, options);
   var state = { name: name, options: options };
-  state.meta = { depth: app.state && app.state.meta.depth + 1 || 0 };
+  var depth = 'depth' in app.state.meta ? (app.state.meta.depth + (isForward ? 1 : -1)) : 0;
+  state.meta = { depth: depth };
+  app.state = state;
   if (firstTime) {
     history.replaceState(state, null, url);
   } else if (url != location.pathname) {
     history.pushState(state, null, url);
   }
-  app.state = state;
 };
 
 app.transitionTo = function(name, options, isForward) {
   var newController = app.getController(name, options);
   app.container.appendChild(controllers[name].container, app.footer.dom);
-  if (!currentController) {
+  if (!currentController || newController === currentController) {
     currentController = newController;
   } else {
     var transition = require('./lib/transition');
@@ -113,7 +114,7 @@ app.getController = function(name, options) {
 };
 
 app.goTo = function(name, options, isForward) {
-  app.storeState(name, options);
+  app.storeState(name, options, isForward);
   app.transitionTo(name, options, isForward);
 };
 
@@ -144,8 +145,8 @@ function extactStateFromUrl() {
     name = 'home';
     options = {};
   }
-  app.storeState(name, options, true);
-  app.goTo(name, options);
+  app.storeState(name, options, true, true);
+  app.transitionTo(name, options, true);
 }
 
 function getControllerClass(name) {

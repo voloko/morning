@@ -1,4 +1,5 @@
 requireCss('./counts.css');
+requireCss('../bg/bg.css');
 
 var v = require('muv/v');
 var tx = require('app/lib/tx');
@@ -30,9 +31,9 @@ p.compose = function() {
     { fragment: true, children: [
       { tag: 'div', className: CLS('m-post-counts-nub') },
       { tag: 'div', className: CLS('m-post-counts-bar'), children: [
-        likes && { tag: 'span', className: CLS('m-post-counts-likes'),
+        likes && { tag: 'span', className: CLS('m-post-counts-likes m-bg-like'),
           text: formatLikes(likes), as: 'likes' },
-        comments && { tag: 'span', className: CLS('m-post-counts-comments'),
+        comments && { tag: 'span', className: CLS('m-post-counts-comments m-bg-comment'),
           text: formatComments(comments), as: 'comments' }
       ] }
     ] }

@@ -28,6 +28,11 @@ module.exports = {
   'str:more': 'See more posts…',
   'str:loading': 'Loading',
   
-  'cmt:like': 'Like'
+  'cmt:like': 'Like',
+  'cmt:nlikes': '{count} people',
+  'cmt:1like': '1 person',
+  'cmt:likethis': 'like this.',
+  'cmt:more': 'View previous comments…',
+  'cmt:loading': 'Loading'
 };
 

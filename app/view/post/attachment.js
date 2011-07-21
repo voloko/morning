@@ -20,8 +20,8 @@ p.compose = function() {
 
     { tag: 'div', className: CLS("m-post-attch-content m-image-block-content"), children: [
       { tag: 'a', className: CLS('m-post-attch-name'), href: value.href, text: value.name, target: '_blank' },
-      value.descitpion && { tag: 'div', className: CLS('m-post-attch-desc'), text: value.descitpion },
-      value.caption && { tag: 'div', className: CLS('m-post-attch-caption'), text: value.caption }
+      value.caption && { tag: 'div', className: CLS('m-post-attch-caption'), text: value.caption },
+      value.description && { tag: 'div', className: CLS('m-post-attch-description'), text: value.description }
     ]},
 
     { tag: 'div', className: CLS('clear') }

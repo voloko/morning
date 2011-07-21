@@ -4,8 +4,6 @@
 }
 
 .m-post-attch-media {
-  padding: 2px;
-  border: 1px solid #CCC;
   margin-bottom: 2px;
 }
 
@@ -13,6 +11,7 @@
   font-weight: bold;
 }
 
+.m-post-attch-description,
 .m-post-attch-caption {
   margin-top: 2px;
   color: #777;

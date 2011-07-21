@@ -22,7 +22,7 @@ p.show = function(container, options) {
   }
 
   stream.addEventListener('loadMore', function(e) {
-    var posts = e.data.posts;
+    var posts = e.data.items;
     postSync.fetchHome({ limit: 10, after: posts[posts.length - 1].created_time }, function(posts) {
       stream.assimilate(posts);
       stream.hasMore = true;

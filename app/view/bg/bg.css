@@ -1,0 +1,8 @@
+.m-bg-like {
+  background-image: url(like.png);
+  background-repeat: no-repeat;
+}
+.m-bg-comment {
+  background-image: url(comment.png);
+  background-repeat: no-repeat;
+}

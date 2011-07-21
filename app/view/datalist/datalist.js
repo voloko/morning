@@ -13,11 +13,15 @@ p._createDom = function() {
     this._moreView()
   ]}, this);
   
-  u.cls.add(this.more, 'hidden');
-  u.cls.add(this.loading, 'hidden');
+  this._initDom();
+};
+
+p._initDom = function() {
+  u.cls.add(this.more, CLS('hidden'));
+  u.cls.add(this.loading, CLS('hidden'));
   this.more.addEventListener('click', u.bind(function() {
     if (!this.isLoading) {
-      this.trigger({ type: 'loadMore', posts: this._items });
+      this.trigger({ type: 'loadMore', items: this._items });
     }
   }, this));
 };
@@ -38,18 +42,18 @@ Object.defineProperties(p, {
   isLoading: {
     set: function(value) {
       this.more.isLoading = value;
-      u.cls.toggle(this.loading, 'hidden', !value);
+      u.cls.toggle(this.loading, CLS('hidden'), !value);
     },
     get: function() {
-      return !u.cls.has(this.loading, 'hidden');
+      return !u.cls.has(this.loading, CLS('hidden'));
     }
   },
   hasMore: {
     set: function(value) {
-      u.cls.toggle(this.more, 'hidden', !value);
+      u.cls.toggle(this.more, CLS('hidden'), !value);
     },
     get: function() {
-      return !u.cls.has(this.more, 'hidden');
+      return !u.cls.has(this.more, CLS('hidden'));
     }
   },
   items: {

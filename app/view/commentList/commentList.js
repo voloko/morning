@@ -9,6 +9,16 @@ var p = List.prototype;
 
 p.defaultClassName = CLS('m-comment-list');
 
+p._createDom = function() {
+  this.dom = v({ tag: 'div', className: this.defaultClassName, children: [
+    { view: require('./more'), as: 'more' },
+    { tag: 'div', as: 'container' },
+    this._loadingView()
+  ]}, this);
+  
+  this._initDom();
+};
+
 p._itemsToViews = function(items) {
   return items.map(function(item) {
     return { view: Comment, value: item };

@@ -19,7 +19,7 @@ Sync.fetchPost = function(id, callback) {
     var posts = Sync.createAndCacheModels('all', r.posts, true);
     require('./pageSync').createAndCacheModels('min', r.pages, true);
     require('./userSync').createAndCacheModels('min', r.users, true);
-    callback(posts);
+    callback(posts[0]);
   });
 };
 

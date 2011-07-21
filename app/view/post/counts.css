@@ -24,10 +24,10 @@
 }
 
 .m-post-counts-likes {
-  background: url(like.png) no-repeat 0 50%;
+  background-position: 0 50%;
   padding-left: 17px;
 }
 .m-post-counts-comments {
-  background: url(comment.png) no-repeat 0 50%;
+  background-position: 0 50%;
   padding-left: 17px;
 }

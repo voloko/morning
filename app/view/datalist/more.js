@@ -11,7 +11,7 @@ p.defaultClassName = CLS('m-datalist-more');
 p._createDom = function() {
   this.refs = {};
   this.dom = v({ 
-    tag: 'a', href: '#', className: p.defaultClassName, children: [
+    tag: 'a', href: '#', className: this.defaultClassName, children: [
       { text: this._moreText(), as: 'text' },
       { text: ' ' },
       { tag: 'i', className: CLS('m-datalist-more-loader') }

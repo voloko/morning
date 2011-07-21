@@ -45,5 +45,12 @@ p.updateLikes = function() {
           as: 'likesCount'}
       ]}, this))
     }
+  } else {
+    if (this.likesCount) {
+      var parent = this.likesCount.parentNode;
+      parent.removeChild(this.likesCount.previousSibling);
+      parent.removeChild(this.likesCount);
+      this.likesCount = null;
+    }
   }
 };
