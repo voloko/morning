@@ -27,7 +27,7 @@ m.defineProperties(p, {
 });
 
 Object.defineProperties(p, {
-  time: { 
+  datetime: { 
     configurable: true,
     get: function() {
       return new Date(this.created_time*1000);

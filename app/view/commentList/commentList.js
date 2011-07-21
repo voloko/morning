@@ -15,4 +15,10 @@ p._itemsToViews = function(items) {
   });
 };
 
-p.updateView = function(view, item) {};
+p._updateExistingView = function(view, item) {
+  v.nearest(view).updateLikes();
+};
+
+p._compareItems = function(a, b) {
+    return b.order > a.order;
+};

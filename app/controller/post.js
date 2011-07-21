@@ -24,18 +24,18 @@ p.update = function(options) {
     this.post.value = post;
   }
 
-  postSync.fetchPost(options.id, u.bind(function(posts) {
-    this.post.value = post;
-  }, this));
-  
   var comments = commentSync.getForPostFromCache(options.id);
   if (comments) {
-    this.list.items = comments.slice(10);
+    this.list.items = comments.slice(0, 25);
   } else {
     this.list.items = [];
   }
   
-  commentSync.fetchForPost(options.id, { limit: 10 }, u.bind(function(comments) {
+  postSync.fetchPost(options.id, u.bind(function(posts) {
+    this.post.value = posts[0];
+  }, this));
+  
+  commentSync.fetchForPost(options.id, { limit: 25 }, u.bind(function(comments) {
     this.list.assimilate(comments);
   }, this));
 };

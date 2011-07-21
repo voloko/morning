@@ -9,7 +9,7 @@ p.defaultClassName = CLS('m-datalist');
 p._createDom = function() {
   this.dom = v({ tag: 'div', className: this.defaultClassName, children: [
     this._loadingView(),
-    { tag: 'container', as: 'container' },
+    { tag: 'div', as: 'container' },
     this._moreView()
   ]}, this);
   
@@ -55,6 +55,7 @@ Object.defineProperties(p, {
   items: {
     set: function(items) {
       this._items = items || [];
+      this.container.innerHTML = '';
       this.container.appendChild(
         v({ fragment: true, children: this._itemsToViews(items) })
       );
@@ -73,13 +74,17 @@ p.itemsToViews = function(items) {
 
 p._updateExistingView = function(view, item) {};
 
+p._compareItems = function(a, b) {
+  return a.order > b.order;
+};
+
 p.assimilate = function(items) {
   if (this._items.length) {
     var groups = [[]];
     var j = 0;
     var children = [].slice.call(this.container.children, 0);
     for (var i = 0; i < items.length; i++) {
-      while (this._items[j] && this._items[j].order > items[i].order) {
+      while (this._items[j] && this._compareItems(this._items[j], items[i])) {
         groups[++j] = [];
       }
       if (!this._items[j] && !groups[j]) {

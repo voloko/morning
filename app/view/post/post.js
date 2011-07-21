@@ -48,7 +48,7 @@ p.composeContent = function() {
       { view: require('./attachment'), value: this.value.attachment },
 
     { tag: 'div', className: CLS('m-post-actions'), children: [
-      { view: require('app/view/timestamp/timestamp'), value: this.value.time }
+      { view: require('app/view/timestamp/timestamp'), value: this.value.datetime }
     ] },
 
     this.composeCounts(),

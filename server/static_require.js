@@ -101,11 +101,12 @@ function addIEBackground (cssPath, style, sourceValue) {
     style.setProperty('*background-image', 'url(' + absoluteImagePath(url) + ')');
 }
 
-var classRe = /\.([a-z0-9_-]+)/i;
+var classRe = /\.([a-z0-9_-]+)/ig;
 function processCssIncludes (cssPath, classMapping) {
     var code = fs.readFileSync(cssPath, 'utf8');
     var styleSheet = cssom.parse(code);
     styleSheet.cssRules.forEach(function(rule) {
+        var was = rule.selectorText;
         rule.selectorText = rule.selectorText.replace(classRe, function(match) {
             return '.' + (classMapping[RegExp.$1] || RegExp.$1);
         });
@@ -162,7 +163,7 @@ function addFileToAstList (filePath, wrap) {
     state.requiredAsts[state.required[filePath]] = ast;
 }
 
-var CHARS = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_";
+var CHARS = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_";
 function generateNext(cur) {
     for (var i = cur.length - 1; i > -1; i--) {
         var index = CHARS.indexOf(cur.charAt(i));
@@ -216,12 +217,10 @@ function staticRequire (filePath, options) {
             return counts[b] - counts[a];
         });
         var mapping = 'a';
-        if (options.squeeze) {
-            sequence.forEach(function(c) {
-               map[c] = mapping;
-               mapping = generateNext(mapping);
-            });
-        }
+        sequence.forEach(function(c) {
+             map[c] = options.squeeze ? mapping : (c + '_' + mapping);
+             mapping = generateNext(mapping);
+        });
         state.cls.forEach(function(c) {
             c[1] = c[1].split(/\s+/).map(function(c) {
                 return map[c] || c;
@@ -292,6 +291,7 @@ exports.handle = function(req, res, options) {
     }
     filePath = path.resolve(options.serverRoot, filePath);
     options.globalize = req.param('globalize');
+    options.squeeze = req.param('squeeze');
     try {
         var ast = staticRequire(filePath, options);
         if (req.param('squeeze')) {

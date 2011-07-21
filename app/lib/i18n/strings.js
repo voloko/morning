@@ -26,6 +26,8 @@ module.exports = {
   'pct:nlk': '{count} people',
   
   'str:more': 'See more posts…',
-  'str:loading': 'Loading'
+  'str:loading': 'Loading',
+  
+  'cmt:like': 'Like'
 };
 

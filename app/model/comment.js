@@ -25,7 +25,7 @@ Object.defineProperties(p, {
   order: {
     configurable: true,
     get: function() {
-      return this.created_time*1;
+      return this.time*1;
     } },
   
   from: {
@@ -33,6 +33,12 @@ Object.defineProperties(p, {
     get: function() {
       return require('app/sync/baseSync').cached(this.fromid);
     }
-  }
+  },
+  
+  datetime: { 
+    configurable: true,
+    get: function() {
+      return new Date(this.time*1000);
+    } }
 
 } );

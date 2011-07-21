@@ -1,8 +1,30 @@
 .m-comment {
-  background-color: #D8DFEA;
+  background-color: #ECEFF5;
+  padding: 5px 5px;
+  border-bottom: 1px solid #FFF;
 }
 
 .m-comment-pic {
   width: 34px;
   height: 34px;
+}
+
+.m-comment-from {
+  font-weight: bold;
+}
+
+.m-comment-actions {
+  margin-top: 3px;
+  color: #777;
+  font-size: 12px;
+}
+
+a.m-comment-like-count,
+a.m-comment-like {
+  color: #6D84B4;
+}
+
+.m-comment-like-count {
+  background: url(like.png) 0 45% no-repeat;
+  padding-left: 14px;
 }

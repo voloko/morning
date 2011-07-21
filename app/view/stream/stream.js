@@ -7,7 +7,7 @@ var Post = require('app/view/post/post');
 var Stream = module.exports = require('app/view/datalist/datalist').createClass();
 var p = Stream.prototype;
 
-p.defaultClassName = 'm-steam';
+p.defaultClassName = CLS('m-steam');
 
 p._itemsToViews = function(items) {
   return items.map(function(post) {

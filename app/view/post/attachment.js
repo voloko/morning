@@ -24,7 +24,7 @@ p.compose = function() {
       value.caption && { tag: 'div', className: CLS('m-post-attch-caption'), text: value.caption }
     ]},
 
-    { tag: 'div', className: 'clear' }
+    { tag: 'div', className: CLS('clear') }
   ] });
 };
 

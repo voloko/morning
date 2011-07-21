@@ -27,11 +27,11 @@ Sync.fetchForPost = function(postId, options, callback) {
   api.multiquery(buildMultiquery(
     'WHERE post_id = "' + postId + '"' +
     (options.after ? ' AND time < ' + options.after : '') +
-    ' ORDER BY time LIMIT ' + (options.limit || 25)
+    ' ORDER BY time DESC LIMIT ' + (options.limit || 25)
   ), function(r) {
     var comments = Sync.createAndCacheModels('all', r.comments, !options.after);
     comments = comments.sort(function(a, b) {
-      return b.order - a.order;
+      return a.order - b.order;
     });
     require('./pageSync').createAndCacheModels('min', r.pages, true);
     require('./userSync').createAndCacheModels('min', r.users, true);
