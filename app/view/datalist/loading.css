@@ -1,0 +1,16 @@
+.m-datalist-loading {
+  padding-left: 10px;
+  line-height: 40px;
+  font-size: 14px;
+  border: 1px solid #CCC;
+  border-left: none;
+  border-right: none;
+}
+
+.m-datalist-loading-loader {
+  display: inline-block;
+  background: url(indicator_blue_small.gif) 0 0;
+  width: 16px;
+  height: 11px;
+  margin-left: 5px;
+}
