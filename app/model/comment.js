@@ -19,3 +19,11 @@ m.defineProperties(p, {
   likes:      obj,
   user_likes: obj
 });
+
+
+Object.defineProperties(p, {
+  order: { 
+    configurable: true,
+    get: function() {
+      return this.created_time*1;
+    } } } );

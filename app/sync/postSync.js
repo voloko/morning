@@ -39,11 +39,14 @@ Sync.fetchHome = function(options, callback) {
   options = options || {};
 
   api.multiquery(buildMultiquery(
-    'WHERE filter_key IN ("others", "owner")' +
+    'WHERE filter_key IN ("others")' +
     (options.after ? ' AND created_time < ' + options.after : '') +
-    ' LIMIT ' + options.limit || 25 + ' ORDER BY created_time'
+    ' LIMIT ' + (options.limit || 25)
   ), function(r) {
     var posts = Sync.createAndCacheModels('all', r.posts, !options.after);
+    posts = posts.sort(function(a, b) {
+      return b.order - a.order;
+    });
     require('./pageSync').createAndCacheModels('min', r.pages, true);
     require('./userSync').createAndCacheModels('min', r.users, true);
     if (!options.after) Base.addToCache({ id: 'request:home', post_ids: posts.map(function(post) {

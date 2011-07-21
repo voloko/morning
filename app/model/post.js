@@ -33,6 +33,12 @@ Object.defineProperties(p, {
       return new Date(this.created_time*1000);
     } },
     
+  order: { 
+    configurable: true,
+    get: function() {
+      return this.created_time*1;
+    } },
+    
   actor: { 
     configurable: true,
     get: function() {

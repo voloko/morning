@@ -33,4 +33,5 @@ a:visited {
 
 .m-container {
   min-height: 600px;
+  -webkit-transform: translate3d(0, 0, 0)
 }

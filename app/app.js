@@ -60,7 +60,7 @@ app.goBack = function() {
 
 window.addEventListener('popstate', function(e) {
   if (e.state) {
-    var isForward = e.state.meta.guid > app.state.meta.guid;
+    var isForward = e.state.meta.depth > app.state.meta.depth;
     app.state = e.state;
     app.transitionTo(e.state.name, e.state.options, isForward);
   }
@@ -70,7 +70,7 @@ window.addEventListener('popstate', function(e) {
 app.storeState = function(name, options, firstTime) {
   var url = buildUrl(name, options);
   var state = { name: name, options: options };
-  state.meta = { guid: u.guid++ };
+  state.meta = { depth: app.state && app.state.meta.depth + 1 || 0 };
   if (firstTime) {
     history.replaceState(state, null, url);
   } else if (url != location.pathname) {

@@ -27,6 +27,10 @@ p.update = function(options) {
   postSync.fetchPost(options.id, function(posts) {
     postView.value = post;
   });
+  
+  commentSync.fetchForPost(options.id, {}, function(comments) {
+    console.log(comments);
+  });
 };
 
 p.title = 'Post';
