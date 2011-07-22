@@ -59,6 +59,7 @@ Object.defineProperties(p, {
   items: {
     set: function(items) {
       this._items = items || [];
+      v.destructAll(this.container);
       this.container.innerHTML = '';
       this.container.appendChild(
         v({ fragment: true, children: this._itemsToViews(items) })

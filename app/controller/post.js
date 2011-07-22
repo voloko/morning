@@ -65,8 +65,7 @@ p.update = function(options) {
 
 p._setPost = function(post) {
   this.post.value = post;
-  this.header.likes = post.likes.count;
-  // u.cls.toggle(this.header, CLS('hidden'), !post.hasCommentsOrLikes);
+  this.header.model = post;
 };
 
 p._updateActions = function(post) {

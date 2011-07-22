@@ -2,6 +2,7 @@ requireCss('./counts.css');
 requireCss('../bg/bg.css');
 
 var v = require('muv/v');
+var u = require('muv/u');
 var tx = require('app/lib/tx');
 
 var PostCounts = module.exports = require('app/view/composable').createClass();
@@ -22,9 +23,17 @@ function formatComments(count) {
   return count > 1 ? tx('pct:ncm', { count: count }) : tx('pct:1cm');
 }
 
+p.defaultBindingOptions = {
+  modelEvents: ['change.likes', 'change.comments'],
+  modelProp: ''
+};
+
 p.compose = function() {
   var likes = this.value.likes && this.value.likes.count*1;
   var comments = this.value.comments && this.value.comments.count*1;
+  u.cls.toggle(this, CLS('hidden'), !likes && !comments);
+  if (!likes && !comments) return v({ text: '' });
+  
   this.dom.href = '#';
   var id = this.value.id;
   this.dom['data-click-action'] = function() {

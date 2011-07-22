@@ -7,7 +7,7 @@ var p = Home.prototype;
 p.show = function(container, options) {
   this.container = container;
   this.container.appendChild(
-    v({ view: require('app/view/stream/stream'), as: 'stream', isLoading: true }, this).dom
+    v({ view: require('app/view/stream/stream'), as: 'stream' }, this).dom
   );
 
   var postSync = require('app/sync/postSync');
@@ -19,20 +19,37 @@ p.show = function(container, options) {
       stream.assimilate(posts.slice(10));
     }, 100);
   }
-  this.stream.loading.time = postSync.getHomeFromCacheTime();
 
   stream.addEventListener('loadMore', function(e) {
     var posts = e.data.items;
-    postSync.fetchHome({ limit: 10, after: posts[posts.length - 1].created_time }, function(posts) {
+    postSync.fetchHome({ limit: 10, after: posts[posts.length - 1].created_time },
+      function(posts) {
       stream.assimilate(posts);
-      stream.hasMore = true;
+      stream.hasMore = posts.length == 10;
       stream.isLoading = false;
     });
   });
+  
+  this.refresh();
+};
 
+var REFRESH_EVERY = 1000*60*5;
+
+p.update = function() {
+  var postSync = require('app/sync/postSync');
+  if (new Date - postSync.getHomeFromCacheTime() > REFRESH_EVERY) {
+    this.refresh();
+  }
+};
+
+p.refresh = function() {
+  var postSync = require('app/sync/postSync');
+  var stream = this.stream;
+  stream.loading.time = postSync.getHomeFromCacheTime();
+  stream.isLoading = true;
   postSync.fetchHome({ limit: 25 }, function(posts) {
     stream.assimilate(posts);
-    stream.hasMore = true;
+    stream.hasMore = posts.length == 25;
     stream.isLoading = false;
   });
 };

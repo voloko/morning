@@ -20,6 +20,4 @@ p._moreView = function() {
   return { view: require('./more'), as: 'more' };
 };
 
-p._updateExistingView = function(view, item) {
-  v.nearest(view).updateCounts();
-};
+p._updateExistingView = function(view, item) {};

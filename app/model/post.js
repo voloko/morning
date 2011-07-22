@@ -72,6 +72,7 @@ p.toggleLike = function(callback) {
         this.likes.user_likes = !this.likes.user_likes;
         this.likes.count *= 1;
         this.likes.count += this.likes.user_likes ? 1 : -1;
+        this.triggerChanges('likes');
         require('app/sync/postSync').addToCache(this, true);
       }
       callback();

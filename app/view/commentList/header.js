@@ -14,32 +14,33 @@ p._createDom = function() {
   this.dom = v({ tag: 'div', className: this.defaultClassName, children: [
     { tag: 'div', className: CLS('m-comment-header-line'), children: [
       { tag: 'i', className: CLS('m-comment-header-nub') }
-    ] }
+    ] },
+    { tag: 'div', className: CLS('m-comment-header-likes'), as: 'count' }
   ] }, this);
 };
 
-Object.defineProperty(p, 'likes', {
+p.defaultBindingOptions = {
+  modelEvents: ['change.likes'],
+  modelProp: ''
+};
+
+Object.defineProperty(p, 'value', {
+  get: function() {
+    return this._value;
+  },
+  
   set: function(value) {
-    if (value*1) {
-      if (!this.count) {
-        this.appendChild(
-          v(
-            { tag: 'div', className: 'm-comment-header-likes', as: 'count' },
-            this)
-        )
-      }
+    this._value = value;
+    var count = value.likes.count*1;
+    u.cls.toggle(this.count, CLS('hidden'), !count);
+    if (count) {
       this.count.innerHTML = '';
-      var text = value > 1 ? tx('cmt:nlikes', {count: value}) : tx('cmt:1like');
+      var text = count > 1 ? tx('cmt:nlikes', {count: count}) : tx('cmt:1like');
       this.count.appendChild(
         v({ tag: 'a', href: '#', text: text,
           className: CLS('m-comment-header-like-number m-bg-like') })
       );
       this.count.appendChild(v({ text: ' ' + tx('cmt:likethis') }));
-    } else {
-      if (this.count) {
-        this.count.parentNode.removeChild(this.count);
-        this.count = '';
-      }
     }
   }
 });

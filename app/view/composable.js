@@ -12,6 +12,7 @@ p.compose = function() {
 Object.defineProperty(p, 'value', {
   set: function(value) {
     this._value = value;
+    v.destructAll(this.dom);
     this.dom.innerHTML = '';
     this.dom.appendChild(this.compose());
   },

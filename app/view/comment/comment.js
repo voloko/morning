@@ -25,33 +25,36 @@ p.compose = function() {
           value: this.value.datetime },
         { text: ' \u00B7 '},
         { view: require('app/view/like/comment'), value: this.value,
-          as: 'like' }
+          as: 'like' },
+        { view: Count, model: this.value }
       ] }
     ] },
     { tag: 'div', className: CLS('clear') }
   ] }, this);
-  this.updateLikes();
   return r;
 };
 
+var Count = v.Base.createClass();
+var cp = Count.prototype;
+cp._createDom = function() {
+  this.dom = v({ tag: 'span', children: [
+    { text: ' \u00B7 '},
+    { tag: 'a', href: '#', className: CLS('m-comment-like-count'), as: 'likesCount'}
+  ]}, this)
+};
 
-p.updateLikes = function() {
-  if (this.value.likes*1) {
-    if (this.likesCount) {
-      this.likesCount.innerHTML = this.value.likes;
-    } else {
-      this.like.parentNode.appendChild(v({ fragment: true, children: [
-        { text: ' \u00B7 '},
-        { tag: 'a', href: '#', className: CLS('m-comment-like-count'),
-          text: this.value.likes, as: 'likesCount'}
-      ]}, this))
-    }
-  } else {
-    if (this.likesCount) {
-      var parent = this.likesCount.parentNode;
-      parent.removeChild(this.likesCount.previousSibling);
-      parent.removeChild(this.likesCount);
-      this.likesCount = null;
-    }
+Object.defineProperty(cp, 'value', {
+  get: function() {
+    return this._value.likes;
+  },
+  set: function(value) {
+    this._value = value;
+    this.likesCount.textContent = value.likes;
+    u.cls.toggle(this, CLS('hidden'), !(value.likes*1));
   }
+})
+
+cp.defaultBindingOptions = {
+  modelEvents: ['change.likes'],
+  modelProp: ''
 };

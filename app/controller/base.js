@@ -10,4 +10,8 @@ p.update = function(options) {};
 p.defaultParentState = { name: 'home', options: {} };
 p.parentState = null;
 
+p.destruct = function() {
+  require('muv/v').destructAll(this.container);
+};
+
 p.title = '';

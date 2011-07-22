@@ -13,8 +13,8 @@ p.defaultClassName = CLS('m-comment-list');
 p._createDom = function() {
   this.dom = v({ tag: 'div', className: this.defaultClassName, children: [
     { view: require('./more'), as: 'more' },
-    { tag: 'div', as: 'container' },
     this._loadingView(),
+    { tag: 'div', as: 'container' },
     { tag: 'div', className: CLS('m-comment-list-action'), children: [
       { view: require('app/view/composer/composer'), as: 'composer' }
     ]}
@@ -29,9 +29,7 @@ p._itemsToViews = function(items) {
   });
 };
 
-p._updateExistingView = function(view, item) {
-  v.nearest(view).updateLikes();
-};
+p._updateExistingView = function(view, item) {};
 
 p._compareItems = function(a, b) {
   return b.order > a.order;

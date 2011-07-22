@@ -10,6 +10,7 @@ function tableToSyncer(table) {
 }
 
 var TTL = 1000*60*60*24*7; // cache for a week
+var MAX_SIZE = 500;
 
 function gc() {
   var re = /^c:(.*)/;
@@ -23,6 +24,10 @@ function gc() {
       }
     }
   }
+}
+
+if (storage.length > MAX_SIZE) {
+  gc();
 }
 
 
