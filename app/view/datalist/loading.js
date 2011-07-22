@@ -14,13 +14,13 @@ p._createDom = function() {
   this.dom = v({
     tag: 'div', className: p.defaultClassName, children: [
       { tag: 'div', className: CLS('m-datalist-loading-label'), children: [
-        { text: tx('dtl:loading'), as: 'text' },
+        { text: tx('common:loading'), as: 'text' },
         { text: ' ' },
         { tag: 'i', className: CLS('m-datalist-loading-loader m-bg-loading') }
       ] },
       { tag: 'div', className: CLS('m-datalist-loading-updated hidden'),
         children: [
-        { text: tx('dtl:lastupdated') },
+        { text: tx('common:lastupdated') },
         { view: require('app/view/timestamp/timestamp'), as: 'timestamp' }
       ], as: 'updated' }
     ]

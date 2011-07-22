@@ -10,5 +10,5 @@ p._moreText = function() {
 };
 
 p._loadingText = function() {
-  return tx('cmt:loading');
+  return tx('common:loading');
 };

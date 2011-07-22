@@ -25,7 +25,7 @@ p.compose = function() {
           value: this.value.datetime },
         { text: ' \u00B7 '},
         { tag: 'a', href: '#', className: CLS('m-comment-like'),
-          text: tx('cmt:like'), as: 'like' }
+          text: tx('common:like'), as: 'like' }
       ] }
     ] },
     { tag: 'div', className: CLS('clear') }

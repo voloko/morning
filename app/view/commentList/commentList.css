@@ -10,3 +10,8 @@
   background-color: #ECEFF5;
   width: 100%;
 }
+
+.m-comment-list .m-datalist-loading {
+  border-top: none;
+  border-bottom-color: #FFF;
+}

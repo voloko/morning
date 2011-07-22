@@ -1,4 +1,5 @@
 requireCss('./app.css');
+global.console = global.console || function() {};
 var v = require('muv/v');
 var u = require('muv/u');
 

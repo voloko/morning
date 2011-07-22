@@ -81,7 +81,7 @@ Object.defineProperties(p, {
         this._suggestion = v({
           tag: 'div',
           className: CLS('m-composer-suggestion m-composer-suggestion_loading'),
-          text: tx('cmps:sug:loading')
+          text: tx('common:loading')
         });
         this.text.parentNode.insertBefore(this._suggestion, this.text);
         this._suggestion.addEventListener('click', u.bind(function(e) {

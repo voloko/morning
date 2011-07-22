@@ -20,28 +20,24 @@ module.exports = {
   'dta:nov': 'Nov',
   'dta:dec': 'Dec',
 
+  'common:like': 'Like',
+  'common:loading': 'Loading',
+  'common:lastupdated': 'Last updated',
+
   'pct:1cm': '1 comment',
   'pct:ncm': '{count} comments',
   'pct:1lk': '1 person',
   'pct:nlk': '{count} people',
 
   'str:more': 'See more posts…',
-  'str:loading': 'Loading',
-  'str:like': 'Like',
 
-  'dtl:loading': 'Loading',
-  'dtl:lastupdated': 'Last updated ',
-
-  'cmt:like': 'Like',
   'cmt:nlikes': '{count} people',
   'cmt:1like': '1 person',
   'cmt:likethis': 'like this.',
   'cmt:more': 'View previous comments…',
-  'cmt:loading': 'Loading',
-  
+
   'cmps:cancel': 'Cancel',
   'cmps:submit': 'Post',
-  'cmps:placheolder': 'Comment',
-  'cmps:sug:loading': 'Loading'
+  'cmps:placheolder': 'Comment'
 };
 

@@ -8,5 +8,5 @@ p._moreText = function() {
 };
 
 p._loadingText = function() {
-  return tx('str:loading');
+  return tx('common:loading');
 };

@@ -55,7 +55,7 @@ p.composeContent = function() {
         value: this.value.datetime, tag: 'span' },
       { text: ' \u00B7 '},
       { tag: 'a', href: '#', className: CLS('m-post-like'),
-        text: tx('str:like'), as: 'like' }
+        text: tx('common:like'), as: 'like' }
     ] },
 
     this.composeCounts(),

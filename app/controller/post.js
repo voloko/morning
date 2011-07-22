@@ -38,14 +38,14 @@ p.update = function(options) {
 
   this.list.items = [];
   this.list.composer.stopComposing();
-
+  this.list.hasMore = false;
+  this.list.isLoading = true;
   var post = postSync.getPostFromCache(options.id);
   if (post) {
     this._setPost(post);
     var comments = commentSync.getForPostFromCache(options.id);
     if (comments) {
       this.list.items = comments.slice(0, 5);
-      this._updateActions();
     }
   }
 
@@ -55,6 +55,7 @@ p.update = function(options) {
 
     commentSync.fetchForPost(options.id, { limit: 5 },
       u.bind(function(comments) {
+      this.list.isLoading = false;
       this.list.assimilate(comments);
       this._updateActions();
     }, this));
