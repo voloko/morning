@@ -26,6 +26,10 @@
   padding-left: 7px;
 }
 
+.m-post-attch-content {
+  min-width: 150px;
+}
+
 .u-post-attch_multi-media .m-post-attch-content {
   clear: both;
   border-left: 2px solid #CCC;

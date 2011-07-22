@@ -138,7 +138,8 @@ p.findMatches = function(mention, callback) {
   });
 };
 
-p.stopComposing = function() {
+p.stopComposing = function(e) {
+  if (e) e.preventDefault();
   u.cls.remove(this, CLS('m-composer_active'));
   this.text.value = '';
 };
