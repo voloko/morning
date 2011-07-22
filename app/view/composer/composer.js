@@ -39,6 +39,7 @@ p.checkMentions = function() {
   } else {
     if (this._suggestion) {
       u.cls.add(this._suggestion, CLS('hidden'));
+      this.lastMention = '';
     }
   }
 };
@@ -133,18 +134,22 @@ p.showMention = function(mention, position) {
 };
 
 var SUGGESTION_NUMBER = 6;
+function findIn(matches, query, users) {
+  for (var i = 0; i < users.length; i++) {
+    if (users[i].match(query)) {
+      matches.push(users[i]);
+      if (matches.length >= SUGGESTION_NUMBER) { break; }
+    }
+  }
+}
+
 p.findMatches = function(mention, callback) {
   var query = ' ' + mention.toLowerCase();
+  var matches = [];
+  findIn(matches, query, this.extraSuggestions);
+  if (matches.length) { callback(mention, matches); }
   require('app/sync/userSync').getFriendsFromSomewhere(function(users) {
-    var matches = [];
-    for (var i = 0; i < users.length; i++) {
-      if (users[i].match(query)) {
-        matches.push(users[i]);
-        if (matches.length >= SUGGESTION_NUMBER) {
-          break;
-        }
-      }
-    }
+    findIn(matches, query, users);
     callback(mention, matches);
   });
 };

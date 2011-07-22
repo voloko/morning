@@ -25,9 +25,9 @@ p.show = function(container, options) {
       { limit: 25, offset: items.length },
       u.bind(function(items) {
         this.list.assimilate(items);
-        this.list.hasMore = true;
+        this.list.hasMore = items.length === 25;
         this.list.isLoading = false;
-        this._updateActions();
+        // this._updateActions();
     }, this));
   }, this));
 };
@@ -37,7 +37,7 @@ p.update = function(options) {
   var commentSync = require('app/sync/commentSync');
 
   this.list.items = [];
-  this.list.action.stopComposing();
+  this.list.composer.stopComposing();
 
   var post = postSync.getPostFromCache(options.id);
   if (post) {

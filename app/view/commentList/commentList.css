@@ -5,3 +5,8 @@
   border-top: none;
   border-bottom-color: #FFF;
 }
+
+.m-comment-list-action {
+  background-color: #ECEFF5;
+  width: 100%;
+}
