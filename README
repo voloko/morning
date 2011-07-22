@@ -1,8 +1,8 @@
 Mobile client for facebook experiment built using web tech.
 
 Install
-	
-	git clone git://github.com/voloko/morning.git
-	git clone git://github.com/voloko/muv.git
-	npm install uglify-js cssom mime express
-	node server run.js
+git clone git://github.com/voloko/morning.git
+git clone git://github.com/voloko/muv.git
+npm install uglify-js cssom mime express
+cd morning
+node server run.js
