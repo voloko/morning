@@ -46,7 +46,7 @@ p.assimilate = function(items) {
     if (!map[fromid]) {
       map[fromid] = true;
       var user = require('app/sync/userSync').cached(fromid);
-      if (user) { extra.push(user); }
+      if (user) { extra.unshift(user); }
     }
   });
   this.composer.extraSuggestions = extra;
