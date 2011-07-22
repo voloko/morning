@@ -1,6 +1,16 @@
 var log = [];
 var ready = false;
 
+exports.method = function(options, callback) {
+  if (!ready) {
+    log.push(['method', options, callback]);
+    return;
+  }
+  FB.api(options, function(result) {
+    callback(result);
+  });
+};
+
 exports.query = function(query, callback) {
   if (!ready) {
     log.push(['query', query, callback]);

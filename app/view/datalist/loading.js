@@ -10,24 +10,31 @@ var p = Loading.prototype;
 p.defaultClassName = CLS('m-datalist-loading');
 
 p._createDom = function() {
-  this.refs = {};
   this.dom = v({
     tag: 'div', className: p.defaultClassName, children: [
-      { text: tx('str:loading'), as: 'text' },
-      { text: ' ' },
-      { tag: 'i', className: CLS('m-datalist-loading-loader') }
+      { tag: 'div', className: CLS('m-datalist-loading-label'), children: [
+        { text: tx('dtl:loading'), as: 'text' },
+        { text: ' ' },
+        { tag: 'i', className: CLS('m-datalist-loading-loader') }
+      ] },
+      { tag: 'div', className: CLS('m-datalist-loading-updated hidden'), children: [
+        { text: tx('dtl:lastupdated') },
+        { view: require('app/view/timestamp/timestamp'), as: 'timestamp' }
+      ], as: 'updated' }
     ]
-  }, this.refs);
+  }, this);
 };
 
-Object.defineProperty(p, 'text', {
-  get: function() {
-    return this.refs.text.toString();
-  },
-  set: function(value) {
-    var text = this.refs.text;
-    text.parentNode.replaceChild(
-      v({ text: value, as: 'text' }, this.refs),
-      text);
+u.delegate.prop(p, 'time', 'timestamp', 'value');
+
+Object.defineProperties(p, {
+  time: {
+    get: function() {
+      return this.timestamp.value;
+    },
+    set: function(value) {
+      this.timestamp.value = value;
+      u.cls.toggle(this.updated, CLS('hidden'), !value);
+    }
   }
-})
+});

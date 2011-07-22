@@ -5,21 +5,21 @@ var Home = module.exports = u.createClass(require('./base'));
 var p = Home.prototype;
 
 p.show = function(container, options) {
-  this.refs = {};
   this.container = container;
   this.container.appendChild(
-    v({ view: require('app/view/stream/stream'), as: 'stream', isLoading: true }, this.refs).dom
+    v({ view: require('app/view/stream/stream'), as: 'stream', isLoading: true }, this).dom
   );
 
   var postSync = require('app/sync/postSync');
   var posts = postSync.getHomeFromCache();
-  var stream = this.refs.stream;
+  var stream = this.stream;
   if (posts) {
     stream.assimilate(posts.slice(0, 10));
     setTimeout(function() {
       stream.assimilate(posts.slice(10));
     }, 100);
   }
+  this.stream.loading.time = postSync.getHomeFromCacheTime();
 
   stream.addEventListener('loadMore', function(e) {
     var posts = e.data.items;

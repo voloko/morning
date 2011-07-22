@@ -35,6 +35,10 @@ Sync.getHomeFromCache = function() {
   return [];
 };
 
+Sync.getHomeFromCacheTime = function() {
+  return Base.cacheTime('request:home');
+}
+
 Sync.fetchHome = function(options, callback) {
   options = options || {};
 

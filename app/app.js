@@ -40,13 +40,25 @@ app.init = function() {
   setTimeout(function() {
     extactStateFromUrl();
     alignWindow();
-  });
+  }, 1);
 };
 
 app.state = { meta: {} };
 
 app.apiReady = function() {
   require('./lib/api').init();
+};
+
+app.showComposer = function(input) {
+  if (currentController) {
+    app.container.removeChild(currentController.container);
+  }
+  currentController = app.getController('composer', {});
+  currentController.parentState = app.state;
+  currentController.useInput(input);
+  app.state = { name: 'composer', options: {}, meta: generateMeta(0) };
+  app.container.appendChild(currentController.container);
+  window.scrollTo(0, 0);
 };
 
 app.goBack = function() {
@@ -77,7 +89,7 @@ app.replaceState = function(state) {
 app.pushState = function(state, deptOffset) {
   var meta = generateMeta(1);
   app.state = { name: state.name, options: state.options, meta: meta };
-  // history.pushState(this.state, null, buildUrl(this.state));
+  history.pushState(this.state, null, buildUrl(this.state));
 };
 
 app.transitionTo = function(state, isForward) {
@@ -87,7 +99,7 @@ app.transitionTo = function(state, isForward) {
   if (!currentController || newController === currentController) {
     currentController = newController;
     app.container.appendChild(newController.container);
-    document.body.scrollTop = state.meta.top;
+    window.scrollTo(0, state.meta.top);
   } else {
     var transition = require('./lib/transition');
     transition(
@@ -115,7 +127,7 @@ app.getController = function(name, options) {
   if (controllers[name]) {
     controllers[name].update(options);
   } else {
-    var container = v({ tag: 'div' });
+    var container = v({ tag: 'div', className: CLS('m-container-item') });
     var controllerClass = getControllerClass(name);
     controllers[name] = new controllerClass();
     controllers[name].show(container, options);
@@ -164,6 +176,7 @@ function getControllerClass(name) {
   switch(name) {
     case 'home': return require('./controller/home');
     case 'post': return require('./controller/post');
+    case 'composer': return require('./controller/composer');
   }
   return null;
 }
@@ -174,4 +187,10 @@ function alignWindow() {
     window.scrollTo(0, 1);
   }, 1);
 }
+
+console.log(require('app/sync/userSync').getFriendsFromCache().length);
+
+console.log(require('app/lib/api').method({ method: 'users.getContactInfo'}, function(c) {
+  console.log(c);
+}));
 

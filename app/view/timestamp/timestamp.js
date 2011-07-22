@@ -12,7 +12,7 @@ Object.defineProperty(p, 'value', {
   configurable: true,
   set: function(value) {
     this._value = value;
-    this.dom.innerHTML = timeSince(value);
+    this.dom.innerHTML = value && timeSince(value);
   },
   get: function() {
     return this._value;

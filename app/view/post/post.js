@@ -2,6 +2,7 @@ requireCss('./post.css');
 
 var v = require('muv/v');
 var u = require('muv/u');
+var tx = require('app/lib/tx');
 
 var Post = module.exports = require('app/view/composable').createClass();
 var p = Post.prototype;
@@ -48,7 +49,9 @@ p.composeContent = function() {
       { view: require('./attachment'), value: this.value.attachment },
 
     { tag: 'div', className: CLS('m-post-actions'), children: [
-      { view: require('app/view/timestamp/timestamp'), value: this.value.datetime }
+      { view: require('app/view/timestamp/timestamp'), value: this.value.datetime, tag: 'span' },
+      { text: ' \u00B7 '},
+      { tag: 'a', href: '#', className: CLS('m-post-like'), text: tx('str:like'), as: 'like' }
     ] },
 
     this.composeCounts(),

@@ -19,15 +19,19 @@ module.exports = {
   'dta:oct': 'Oct',
   'dta:nov': 'Nov',
   'dta:dec': 'Dec',
-  
+
   'pct:1cm': '1 comment',
   'pct:ncm': '{count} comments',
   'pct:1lk': '1 person',
   'pct:nlk': '{count} people',
-  
+
   'str:more': 'See more posts…',
   'str:loading': 'Loading',
-  
+  'str:like': 'Like',
+
+  'dtl:loading': 'Loading',
+  'dtl:lastupdated': 'Last updated ',
+
   'cmt:like': 'Like',
   'cmt:nlikes': '{count} people',
   'cmt:1like': '1 person',

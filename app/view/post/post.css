@@ -37,12 +37,20 @@
   margin-right: 30px;
 }
 
+.m-post_standalone {
+  background: white;
+}
+
 .m-post_standalone .m-post-content {
   margin-right: 0;
 }
 
 .m-post-actor {
   font-weight: bold;
+}
+
+.m-post-actions {
+  font-size: 12px;
 }
 
 .m-post-actions .m-timestamp {
@@ -58,4 +66,8 @@
   height: 22px;
   margin-top: -11px;
   padding: 3px;
+}
+
+a.m-post-like {
+  color: #6D84B4;
 }

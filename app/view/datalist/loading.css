@@ -1,10 +1,24 @@
 .m-datalist-loading {
-  padding-left: 10px;
-  line-height: 40px;
-  font-size: 14px;
   border: 1px solid #CCC;
   border-left: none;
   border-right: none;
+  height: 40px;
+}
+
+.m-datalist-loading-label {
+  padding-left: 10px;
+  line-height: 40px;
+  font-size: 14px;
+  float: left;
+}
+
+.m-datalist-loading-updated {
+  float: right;
+  padding-top: 5px;
+  margin-right: 10px;
+  font-size: 12px;
+  line-height: 15px;
+  text-align: right;
 }
 
 .m-datalist-loading-loader {

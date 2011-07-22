@@ -78,9 +78,10 @@ var Sync = {
   },
 
   addToCache: function(model, permanent) {
-    this.cache[model.id] = model;
+    var t = +new Date;
+    this.cache[model.id] = [t, model];
     if (permanent) {
-      storage['c:' + model.id] = JSON.stringify([+new Date, this.fqlTable, model.propValues || model]);
+      storage['c:' + model.id] = JSON.stringify([t, this.fqlTable, model.propValues || model]);
     }
   },
 
@@ -92,11 +93,16 @@ var Sync = {
           var row = JSON.parse(storage[key]);
           var syncer = tableToSyncer(row[1]);
           var model = syncer ? new syncer.model(row[2]) : row[2];
-          this.cache[model.id] = model;
+          this.cache[model.id] = [row[0], model];
         } catch(e) {}
       }
     };
-    return this.cache[id];
+    return this.cache[id] && this.cache[id][1];
+  },
+  
+  cacheTime: function(id) {
+    var c = this.cached(id);
+    return c ? new Date(this.cache[id][0]) : 0;
   },
 
   cache: {}

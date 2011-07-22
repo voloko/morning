@@ -13,7 +13,8 @@ p._createDom = function() {
   this.dom = v({ tag: 'div', className: this.defaultClassName, children: [
     { view: require('./more'), as: 'more' },
     { tag: 'div', as: 'container' },
-    this._loadingView()
+    this._loadingView(),
+    { view: require('./action'), as: 'action' }
   ]}, this);
   
   this._initDom();

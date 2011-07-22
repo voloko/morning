@@ -2,6 +2,7 @@
   border-bottom: 1px solid #D6DDEB;
   height: 3px;
   position: relative;
+  background: white;
 }
 
 .m-comment-header-nub {

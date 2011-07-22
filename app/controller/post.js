@@ -6,6 +6,7 @@ var p = Post.prototype;
 
 p.show = function(container, options) {
   this.container = container;
+  u.cls.add(this.container, CLS('m-container_blue'));
   this.container.appendChild(
     v({ fragment: true, children: [
       { view: require('app/view/post/standalonePost'), as: 'post' },
@@ -36,6 +37,7 @@ p.update = function(options) {
   var commentSync = require('app/sync/commentSync');
 
   this.list.items = [];
+  this.list.action.stopComposing();
 
   var post = postSync.getPostFromCache(options.id);
   if (post) {
@@ -70,4 +72,4 @@ p._updateActions = function(post) {
   this.list.hasMore = this.post.value.comments.count > this.list.items.length;
 };
 
-p.title = 'Post';
+p.title = 'Comments';

@@ -22,6 +22,9 @@ a:visited {
   clear: both;
 }
 
+table {
+  border-spacing: 0;
+}
 
 .test {
   background: red;
@@ -32,6 +35,13 @@ a:visited {
 }
 
 .m-container {
-  min-height: 600px;
+}
+
+.m-container-item {
   background: white;
+  min-height: 600px;
+}
+
+.m-container_blue {
+  background-color: #ECEFF5;
 }

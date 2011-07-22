@@ -14,6 +14,15 @@
     <fb:login-button width="200" perms="user_about_me,friends_about_me,user_activities,friends_activities,user_birthday,friends_birthday,user_checkins,friends_checkins,user_education_history,friends_education_history,user_events,friends_events,user_groups,friends_groups,user_hometown,friends_hometown,user_interests,friends_interests,user_likes,friends_likes,user_location,friends_location,user_notes,friends_notes,user_online_presence,friends_online_presence,user_photo_video_tags,friends_photo_video_tags,user_photos,friends_photos,user_relationships,friends_relationships,user_relationship_details,friends_relationship_details,user_religion_politics,friends_religion_politics,user_status,friends_status,user_videos,friends_videos,user_website,friends_website,user_work_history,friends_work_history,create_event,create_note,export_stream,manage_friendlists,manage_pages,photo_upload,publish_checkins,publish_stream,read_friendlists,read_insights,read_mailbox,read_notifications,read_requests,read_stream,rsvp_event,share_item,status_update"></fb:login-button>
   </div>
   <script>
+    // 142936615786776 => 
+    // array (
+    //   0 => 'buffy',
+    // ),
+    // 221956687842012 => 
+    // array (
+    //   0 => 'buffy',
+    // ),
+  
     var appId = location.host.match(/localhost/) ? '142936615786776' : '221956687842012';
     FB.init({appId: appId, status: false, cookie: true, xfbml: true });
     FB.Event.subscribe('auth.login', function(response) {
