@@ -31,5 +31,5 @@ p._updateExistingView = function(view, item) {
 };
 
 p._compareItems = function(a, b) {
-    return b.order > a.order;
+  return b.order > a.order;
 };

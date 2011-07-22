@@ -68,6 +68,19 @@ m.defineProperties(p, {
 
 u.alias.prop(p, 'profile_url', 'url');
 
+p.match = function(mention) {
+  return this.searchIndex.indexOf(mention) > -1;
+};
+
+Object.defineProperty(p, 'searchIndex', {
+  get: function() {
+    if (!this._searchIndex) {
+      this._searchIndex = (' ' + this.name + ' ' + this.username).toLowerCase();
+    }
+    return this._searchIndex;
+  }
+});
+
 
 u.alias.prop(p, 'uid', 'id');
 // remove id as real prop

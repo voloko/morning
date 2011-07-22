@@ -13,14 +13,37 @@ var Sync = u.extend({}, Base, {
   
 });
 
+var queue = [];
+var TTL = 1000*60*60*24; // cache once a week
+var friends;
+Sync.getFriendsFromSomewhere = function(callback) {
+  if (queue.length > 0) {
+    queue.push(callback);
+  } else {
+    var d = Base.cacheTime('request:friends');
+    if (d && new Date - d.getTime() < TTL) {
+      callback(Sync.getFriendsFromCache());
+    } else {
+      queue = [callback];
+      Sync.fetchFriends(function(users) {
+        queue.forEach(function(callback) {
+          callback(users);
+        });
+      });
+    }
+  }
+};
+
 Sync.getFriendsFromCache = function() {
+  if (friends) { return friends; }
   var ids = Base.cached('request:friends');
   if (ids) {
-    return ids.ids.map(function(id) {
+    friends = ids.ids.map(function(id) {
       return Base.cached(id);
     }).filter(function(x) {
       return !!x;
     });
+    return friends;
   }
   return [];
 };
