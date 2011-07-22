@@ -20,6 +20,20 @@ m.defineProperties(p, {
   user_likes: obj
 });
 
+p.toggleLike = function(callback) {
+  require('app/lib/api').api(
+    '/' + this.id + '/likes', 
+    this.user_likes ? 'delete' : 'post', 
+    {}, 
+    u.bind(function(r) {
+      if (r === true) {
+        this.user_likes = !this.user_likes;
+        this.likes = this.likes * 1 + (this.user_likes ? 1 : -1);
+        require('app/sync/commentSync').addToCache(this, true);
+      }
+      callback();
+    }, this));
+};
 
 Object.defineProperties(p, {
   order: {

@@ -62,6 +62,22 @@ Object.defineProperties(p, {
   }
 });
 
+p.toggleLike = function(callback) {
+  require('app/lib/api').api(
+    '/' + this.id + '/likes',
+    this.likes.user_likes ? 'delete' : 'post',
+    {},
+    u.bind(function(r) {
+      if (r === true) {
+        this.likes.user_likes = !this.likes.user_likes;
+        this.likes.count *= 1;
+        this.likes.count += this.likes.user_likes ? 1 : -1;
+        require('app/sync/postSync').addToCache(this, true);
+      }
+      callback();
+    }, this));
+};
+
 u.alias.prop(p, 'post_id', 'id');
 // remove id as real prop
 p.propNames = p.propNames.slice(1);

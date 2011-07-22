@@ -28,10 +28,10 @@ app.init = function() {
   document.body.addEventListener('click', function(e) {
     var target = e.target;
     while (target) {
-      var data = target['data-goTo'];
+      var data = target['data-click-action'];
       if (data) {
         e.preventDefault();
-        app.goTo({ name: data.name, options: data.options }, true);
+        target['data-click-action']();
         break;
       }
       target = target.parentNode;

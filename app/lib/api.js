@@ -1,33 +1,29 @@
 var log = [];
 var ready = false;
 
-exports.method = function(options, callback) {
+function api() {
   if (!ready) {
-    log.push(['method', options, callback]);
+    log.push(arguments);
     return;
   }
-  FB.api(options, function(result) {
-    callback(result);
-  });
+  FB.api.apply(FB, arguments);
+};
+
+exports.api = api;
+
+exports.method = function(options, callback) {
+  api(options, function(result) { callback(result); });
 };
 
 exports.query = function(query, callback) {
-  if (!ready) {
-    log.push(['query', query, callback]);
-    return;
-  }
-  FB.api({ method: 'fql.query', query: query }, function(result) {
+  api({ method: 'fql.query', query: query }, function(result) {
     callback(result);
   });
 };
 
 exports.multiquery = function(queries, callback) {
-  if (!ready) {
-    log.push(['multiquery', queries, callback]);
-    return;
-  }
   console.log('multiquery:sql', queries);
-  FB.api({ method: 'fql.multiquery', queries: queries }, function(result) {
+  api({ method: 'fql.multiquery', queries: queries }, function(result) {
     if (result.error_msg) {
       alert(result.error_msg);
       return;
@@ -45,8 +41,7 @@ exports.multiquery = function(queries, callback) {
 exports.init = function() {
   ready = true;
   log.forEach(function(row) {
-    console.log('from log');
-    exports[row[0]].call(exports, row[1], row[2]);
+    FB.api.apply(FB, row);
   });
   log = [];
 };

@@ -23,10 +23,13 @@ function formatComments(count) {
 }
 
 p.compose = function() {
-  var likes = this.value.likes && this.value.likes.count;
-  var comments = this.value.comments && this.value.comments.count;
+  var likes = this.value.likes && this.value.likes.count*1;
+  var comments = this.value.comments && this.value.comments.count*1;
   this.dom.href = '#';
-  this.dom['data-goTo'] = { name: 'post', options: { id: this.value.id } };
+  var id = this.value.id;
+  this.dom['data-click-action'] = function() {
+    require('app/app').goTo({ name: 'post', options: { id: id } }, true);
+  };
   return v(
     { fragment: true, children: [
       { tag: 'div', className: CLS('m-post-counts-nub') },

@@ -21,6 +21,7 @@ module.exports = {
   'dta:dec': 'Dec',
 
   'common:like': 'Like',
+  'common:unlike': 'Unlike',
   'common:loading': 'Loading',
   'common:lastupdated': 'Last updated',
 

@@ -54,8 +54,7 @@ p.composeContent = function() {
       { view: require('app/view/timestamp/timestamp'),
         value: this.value.datetime, tag: 'span' },
       { text: ' \u00B7 '},
-      { tag: 'a', href: '#', className: CLS('m-post-like'),
-        text: tx('common:like'), as: 'like' }
+      { view: require('app/view/like/post'), value: this.value }
     ] },
 
     this.composeCounts(),
@@ -69,8 +68,11 @@ p.composeCounts = function() {
 };
 
 p.composeActions = function() {
+  var id = this.value.id;
   return { tag: 'a', className: CLS('m-post-more'), href: '#', as: 'more',
-    'data-goTo': { name: 'post', options: { id: this.value.id } } };
+    'data-click-action': function() {
+      require('app/app').goTo({ name: 'post', options: { id: id } }, true);
+    } };
 };
 
 p.composeVoice = function() {
