@@ -30,16 +30,27 @@ p.show = function(container, options) {
         // this._updateActions();
     }, this));
   }, this));
+
+  this.list.addEventListener('post', u.bind(function(e) {
+    this.list.isLoading = true;
+    this.post.value.addComment(
+      e.data.text,
+      u.bind(this.refreshComments, this))
+  }, this));
 };
 
 p.update = function(options) {
+  if (this.options && this.options.id == options.id) {
+    this.refreshComments();
+    return;
+  }
+  this.options = options;
   var postSync = require('app/sync/postSync');
   var commentSync = require('app/sync/commentSync');
 
   this.list.items = [];
   this.list.composer.stopComposing();
   this.list.hasMore = false;
-  this.list.isLoading = true;
   var post = postSync.getPostFromCache(options.id);
   if (post) {
     this._setPost(post);
@@ -47,20 +58,27 @@ p.update = function(options) {
     if (comments) {
       this.list.items = comments.slice(0, 5);
     }
+    this._updateActions();
   }
 
 
   postSync.fetchPost(options.id, u.bind(function(post) {
     this._setPost(post);
 
-    commentSync.fetchForPost(options.id, { limit: 5 },
-      u.bind(function(comments) {
-      this.list.isLoading = false;
-      this.list.assimilate(comments);
-      this._updateActions();
-    }, this));
+    this.refreshComments();
   }, this));
 
+};
+
+p.refreshComments = function() {
+  var commentSync = require('app/sync/commentSync');
+  this.list.isLoading = true;
+  commentSync.fetchForPost(this.options.id, { limit: 5 },
+    u.bind(function(comments) {
+    this.list.isLoading = false;
+    this.list.assimilate(comments);
+    this._updateActions();
+  }, this));
 };
 
 p._setPost = function(post) {

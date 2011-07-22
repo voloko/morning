@@ -16,7 +16,7 @@ p._createDom = function() {
         { view: require('app/view/button/button'), text: tx('cmps:cancel'),
           as: 'cancel' },
         { view: require('app/view/button/button'), text: tx('cmps:submit'),
-          use: 'confirm', as: 'post' }
+          use: 'confirm', as: 'submit' }
       ] },
       { tag: 'div', className: CLS('m-composer-text-wrapper'), children: [
         { tag: 'textarea', type: 'text', placeholder: tx('cmps:placheolder'),
@@ -26,10 +26,21 @@ p._createDom = function() {
   ] }, this);
   this.text.addEventListener('focus', u.bind(this.startComposing, this));
   this.cancel.addEventListener('click', u.bind(this.stopComposing, this));
+  this.submit.addEventListener('click', u.bind(this.post, this));
+  
   this.text.addEventListener('keydown', u.bindOnce(this.checkMentions, this));
   this.text.addEventListener('keyup', u.bindOnce(this.checkMentions, this));
   this.text.addEventListener('keypress', u.bindOnce(this.checkMentions, this));
   this.text.addEventListener('change', u.bindOnce(this.checkMentions, this));
+};
+
+p.post = function(e) {
+  if (e) e.preventDefault();
+  var text = this.text.value;
+  if (text) {
+    this.trigger({ type: 'post', canBubble: true, text: text });
+    this.stopComposing();
+  }
 };
 
 p.checkMentions = function() {
@@ -147,6 +158,7 @@ p.findMatches = function(mention, callback) {
   var query = ' ' + mention.toLowerCase();
   var matches = [];
   findIn(matches, query, this.extraSuggestions);
+  console.log(matches);
   if (matches.length) { callback(mention, matches); }
   require('app/sync/userSync').getFriendsFromSomewhere(function(users) {
     findIn(matches, query, users);

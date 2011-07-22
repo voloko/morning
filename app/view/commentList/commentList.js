@@ -13,8 +13,8 @@ p.defaultClassName = CLS('m-comment-list');
 p._createDom = function() {
   this.dom = v({ tag: 'div', className: this.defaultClassName, children: [
     { view: require('./more'), as: 'more' },
-    this._loadingView(),
     { tag: 'div', as: 'container' },
+    this._loadingView(),
     { tag: 'div', className: CLS('m-comment-list-action'), children: [
       { view: require('app/view/composer/composer'), as: 'composer' }
     ]}

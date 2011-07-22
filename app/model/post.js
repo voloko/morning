@@ -79,6 +79,21 @@ p.toggleLike = function(callback) {
     }, this));
 };
 
+p.addComment = function(message, callback) {
+  require('app/lib/api').api(
+    '/' + this.id + '/comments',
+    'post',
+    { message: message },
+    u.bind(function(r) {
+      if (r && r.id) {
+        this.comments.count = this.comments.count * 1 + 1;
+        this.triggerChanges('comments');
+        require('app/sync/postSync').addToCache(this, true);
+      }
+      callback();
+    }, this));
+};
+
 u.alias.prop(p, 'post_id', 'id');
 // remove id as real prop
 p.propNames = p.propNames.slice(1);
