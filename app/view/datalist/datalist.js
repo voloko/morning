@@ -12,7 +12,7 @@ p._createDom = function() {
     { tag: 'div', as: 'container' },
     this._moreView()
   ]}, this);
-  
+
   this._initDom();
 };
 
@@ -104,7 +104,8 @@ p.assimilate = function(items) {
       var group = groups[i];
       if (group.length) {
         this.container.insertBefore(
-          v({ fragment: true, children: this._itemsToViews(group) }), children[i]
+          v({ fragment: true, children: this._itemsToViews(group) }),
+          children[i]
         );
       }
     }

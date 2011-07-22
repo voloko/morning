@@ -15,7 +15,9 @@ p.updateCounts = function() {
       this.refs.counts.value = this.value;
     } else {
       this.refs.more.parentNode.insertBefore(
-        v({ view: require('./counts'), value: this.value, as: 'counts' }, this.refs).dom,
+        v(
+          { view: require('./counts'), value: this.value, as: 'counts' },
+          this.refs).dom,
         this.refs.more
       );
     }
@@ -49,9 +51,11 @@ p.composeContent = function() {
       { view: require('./attachment'), value: this.value.attachment },
 
     { tag: 'div', className: CLS('m-post-actions'), children: [
-      { view: require('app/view/timestamp/timestamp'), value: this.value.datetime, tag: 'span' },
+      { view: require('app/view/timestamp/timestamp'),
+        value: this.value.datetime, tag: 'span' },
       { text: ' \u00B7 '},
-      { tag: 'a', href: '#', className: CLS('m-post-like'), text: tx('str:like'), as: 'like' }
+      { tag: 'a', href: '#', className: CLS('m-post-like'),
+        text: tx('str:like'), as: 'like' }
     ] },
 
     this.composeCounts(),
@@ -75,16 +79,20 @@ p.composeVoice = function() {
 
   if (target) {
     return v({ fragment: true, children: [
-      { tag: 'a', className: CLS('m-post-actor'), text: actor.name, href: actor.url },
+      { tag: 'a', className: CLS('m-post-actor'), text: actor.name,
+        href: actor.url },
       { tag: 'span', className: CLS('m-post-arrow'), text: ' \u25B6 '},
-      { tag: 'a', className: CLS('m-post-target'), text: target.name, href: target.url }
+      { tag: 'a', className: CLS('m-post-target'), text: target.name,
+        href: target.url }
     ] });
   }
-  return actor && v({ tag: 'a', className: CLS('m-post-actor'), text: actor.name, href: actor.url });
+  return actor && v({ tag: 'a', className: CLS('m-post-actor'),
+    text: actor.name, href: actor.url });
 };
 
 p.composeMessage = function() {
-  return v({ tag: 'span', innerHTML: require('app/lib/urlize')(this.value.message) });
+  return v({ tag: 'span',
+    innerHTML: require('app/lib/urlize')(this.value.message) });
 };
 
 p.compose = function() {

@@ -4,7 +4,8 @@ var v = require('muv/v');
 var u = require('muv/u');
 var Post = require('app/view/post/post');
 
-var Stream = module.exports = require('app/view/datalist/datalist').createClass();
+var Stream = module.exports =
+  require('app/view/datalist/datalist').createClass();
 var p = Stream.prototype;
 
 p.defaultClassName = CLS('m-steam');

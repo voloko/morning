@@ -86,3 +86,7 @@
   border-bottom: 1px solid #CCC;
   padding: 0 5px;
 }
+
+.m-composer-suggestion_loading {
+  padding: 5px;
+}

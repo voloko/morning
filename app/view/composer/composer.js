@@ -2,6 +2,7 @@ requireCss('./composer.css');
 
 var v = require('muv/v');
 var u = require('muv/u');
+var tx = require('app/lib/tx');
 
 var Composer = module.exports = v.Base.createClass();
 var p = Composer.prototype;
@@ -12,13 +13,13 @@ p._createDom = function() {
   this.dom = v({ tag: 'div', className: this.defaultClassName, children: [
     { tag: 'div', className: CLS('m-composer-wrap'), children: [
       { tag: 'div', className: 'm-composer-extra', children: [
-        { view: require('app/view/button/button'), text: 'Cancel', 
+        { view: require('app/view/button/button'), text: tx('cmps:cancel'),
           as: 'cancel' },
-        { view: require('app/view/button/button'), text: 'Post', 
+        { view: require('app/view/button/button'), text: tx('cmps:submit'),
           use: 'confirm', as: 'post' }
       ] },
       { tag: 'div', className: CLS('m-composer-text-wrapper'), children: [
-        { tag: 'textarea', type: 'text', placeholder: 'Comment',
+        { tag: 'textarea', type: 'text', placeholder: tx('cmps:placheolder'),
           className: CLS('m-composer-text'), as: 'text', rows: 1 }
       ]}
     ]}
@@ -51,11 +52,11 @@ p.findMentionUnderCursor = function() {
       var upToSpace = text.substr(index).split(/\s/, 1)[0];
       if ((upToSpace.length + index) >= position) {
         if (upToSpace.length > 1) {
-          return { 
-            text: upToSpace.substr(1), 
-            start: index + 1, 
-            end: upToSpace.length + index 
-          }
+          return {
+            text: upToSpace.substr(1),
+            start: index + 1,
+            end: upToSpace.length + index
+          };
         }
       }
     }
@@ -76,23 +77,31 @@ Object.defineProperties(p, {
   suggestion: {
     get: function() {
       if (!this._suggestion) {
-        this._suggestion = v({ tag: 'div', className: CLS('m-composer-suggestion') });
+        this._suggestion = v({
+          tag: 'div',
+          className: CLS('m-composer-suggestion m-composer-suggestion_loading'),
+          text: tx('cmps:sug:loading')
+        });
         this.text.parentNode.insertBefore(this._suggestion, this.text);
         this._suggestion.addEventListener('click', u.bind(function(e) {
           if (e.target['data-name']) {
             var m = this.findMentionUnderCursor();
             var t = this.text.value;
-            
-            this.text.value = t.substr(0, m.start) + '"' + e.target['data-name'] + '"' + t.substr(m.end);
+            var name = e.target['data-name'];
+
+            this.text.value =
+              t.substr(0, m.start) + '"' + name + '"' + t.substr(m.end);
             u.cls.add(this.suggestion, CLS('hidden'));
-            this.text.selectionStart = m.start + e.target['data-name'].length + 2;
+            this.text.selectionStart = m.start + name.length + 2;
           }
-        }, this))
+        }, this));
       }
       return this._suggestion;
     }
   }
 });
+
+p.extraSuggestions = [];
 
 p.getCursorPosition = function(position) {
   var text = this.text.value;
@@ -105,16 +114,18 @@ p.showMention = function(mention, position) {
     return;
   }
   this.lastMention = mention;
-  
+
   var top = this.getCursorPosition(position);
   u.cls.remove(this.suggestion, CLS('hidden'));
   this.suggestion.style.top = top + 'px';
   this.findMatches(mention, u.bind(function(m, result) {
+    u.cls.remove(this.suggestion, CLS('m-composer-suggestion_loading'));
     if (mention == m) {
       this.suggestion.innerHTML = '';
       u.cls.toggle(this.suggestion, CLS('hidden'), !result.length);
       var children = result.map(function(u) {
-        return { tag: 'div', className: CLS('m-composer-suggestion-item'), 'data-name': u.name, text: u.name };
+        return { tag: 'div', className: CLS('m-composer-suggestion-item'),
+          'data-name': u.name, text: u.name };
       });
       this.suggestion.appendChild(v({ fragment: 1, children: children }));
     }

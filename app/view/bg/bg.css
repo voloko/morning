@@ -6,3 +6,7 @@
   background-image: url(comment.png);
   background-repeat: no-repeat;
 }
+.m-bg-loading {
+  background-image: url(indicator_blue_small.gif);
+  background-repeat: no-repeat;
+}

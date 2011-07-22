@@ -1,4 +1,5 @@
 requireCss('./loading.css');
+requireCss('../bg/bg.css');
 
 var v = require('muv/v');
 var u = require('muv/u');
@@ -15,9 +16,10 @@ p._createDom = function() {
       { tag: 'div', className: CLS('m-datalist-loading-label'), children: [
         { text: tx('dtl:loading'), as: 'text' },
         { text: ' ' },
-        { tag: 'i', className: CLS('m-datalist-loading-loader') }
+        { tag: 'i', className: CLS('m-datalist-loading-loader m-bg-loading') }
       ] },
-      { tag: 'div', className: CLS('m-datalist-loading-updated hidden'), children: [
+      { tag: 'div', className: CLS('m-datalist-loading-updated hidden'),
+        children: [
         { text: tx('dtl:lastupdated') },
         { view: require('app/view/timestamp/timestamp'), as: 'timestamp' }
       ], as: 'updated' }

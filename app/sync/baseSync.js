@@ -81,7 +81,8 @@ var Sync = {
     var t = +new Date;
     this.cache[model.id] = [t, model];
     if (permanent) {
-      storage['c:' + model.id] = JSON.stringify([t, this.fqlTable, model.propValues || model]);
+      storage['c:' + model.id] =
+        JSON.stringify([t, this.fqlTable, model.propValues || model]);
     }
   },
 
@@ -99,7 +100,7 @@ var Sync = {
     };
     return this.cache[id] && this.cache[id][1];
   },
-  
+
   cacheTime: function(id) {
     var c = this.cached(id);
     return c ? new Date(this.cache[id][0]) : 0;

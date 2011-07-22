@@ -49,21 +49,16 @@ app.apiReady = function() {
   require('./lib/api').init();
 };
 
-app.showComposer = function(input) {
-  if (currentController) {
-    app.container.removeChild(currentController.container);
-  }
-  currentController = app.getController('composer', {});
-  currentController.parentState = app.state;
-  currentController.useInput(input);
-  app.state = { name: 'composer', options: {}, meta: generateMeta(0) };
-  app.container.appendChild(currentController.container);
-  window.scrollTo(0, 0);
-};
-
 app.goBack = function() {
   if (currentController.isHome) { return; }
-  var state = currentController.parentState || currentController.defaultParentState;
+
+  // use browser history when available
+  if (currentController.parentState) {
+    history.back();
+    return;
+  }
+  var state = currentController.parentState ||
+    currentController.defaultParentState;
   if (state) { app.goTo(state, false); }
 };
 
@@ -110,11 +105,11 @@ app.transitionTo = function(state, isForward) {
       state.meta.top || 0,
       function() {
         currentController = newController;
-        if (isForward) { 
+        if (isForward) {
           newController.parentState = app.state;
-          app.pushState(state); 
+          app.pushState(state);
         } else {
-          app.replaceState(state); 
+          app.replaceState(state);
         }
     });
   }
@@ -176,7 +171,6 @@ function getControllerClass(name) {
   switch(name) {
     case 'home': return require('./controller/home');
     case 'post': return require('./controller/post');
-    case 'composer': return require('./controller/composer');
   }
   return null;
 }
@@ -187,10 +181,11 @@ function alignWindow() {
     window.scrollTo(0, 1);
   }, 1);
 }
-
-console.log(require('app/sync/userSync').getFriendsFromCache().length);
-
-console.log(require('app/lib/api').method({ method: 'users.getContactInfo'}, function(c) {
-  console.log(c);
-}));
-
+//
+// console.log(require('app/sync/userSync').getFriendsFromCache().length);
+//
+// console.log(require('app/lib/api')
+//  .method({ method: 'users.getContactInfo'}, function(c) {
+//   console.log(c);
+// }));
+//

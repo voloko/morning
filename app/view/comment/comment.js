@@ -24,7 +24,8 @@ p.compose = function() {
         { view: require('app/view/timestamp/timestamp'), tag: 'span',
           value: this.value.datetime },
         { text: ' \u00B7 '},
-        { tag: 'a', href: '#', className: CLS('m-comment-like'), text: tx('cmt:like'), as: 'like' }
+        { tag: 'a', href: '#', className: CLS('m-comment-like'),
+          text: tx('cmt:like'), as: 'like' }
       ] }
     ] },
     { tag: 'div', className: CLS('clear') }
@@ -41,8 +42,8 @@ p.updateLikes = function() {
     } else {
       this.like.parentNode.appendChild(v({ fragment: true, children: [
         { text: ' \u00B7 '},
-        { tag: 'a', href: '#', className: CLS('m-comment-like-count'), text: this.value.likes,
-          as: 'likesCount'}
+        { tag: 'a', href: '#', className: CLS('m-comment-like-count'),
+          text: this.value.likes, as: 'likesCount'}
       ]}, this))
     }
   } else {

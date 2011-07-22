@@ -23,7 +23,7 @@
 
 .m-datalist-loading-loader {
   display: inline-block;
-  background: url(indicator_blue_small.gif) 0 0;
+  background-position: 0 0;
   width: 16px;
   height: 11px;
   margin-left: 5px;

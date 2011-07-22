@@ -48,15 +48,21 @@ Sync.fetchHome = function(options, callback) {
     ' LIMIT ' + (options.limit || 25) +
     (options.offset ? ' OFFSET ' + options.offset : '')
   ), function(r) {
-    var posts = Sync.createAndCacheModels('all', r.posts, !options.after && !options.offset);
+    var posts = Sync.createAndCacheModels(
+      'all',
+      r.posts,
+      !options.after && !options.offset);
     posts = posts.sort(function(a, b) {
       return b.order - a.order;
     });
     require('./pageSync').createAndCacheModels('min', r.pages, true);
     require('./userSync').createAndCacheModels('min', r.users, true);
-    if (!options.after && !options.offset) Base.addToCache({ id: 'request:home', post_ids: posts.map(function(post) {
-      return post.post_id;
-    }) }, true);
+    if (!options.after && !options.offset) {
+      Base.addToCache({
+        id: 'request:home',
+        post_ids: posts.map(function(post) { return post.post_id; })
+      }, true);
+    }
     callback(posts);
   });
 };

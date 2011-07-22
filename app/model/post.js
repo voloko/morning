@@ -9,16 +9,16 @@ m.defineProperties(p, {
   post_id:      obj,
   app_id:       obj,
   source_id:    obj,
-  updated_time: obj,   
-  created_time: obj,   
-  filter_key:   obj, 
-  attribution:  obj,  
+  updated_time: obj,
+  created_time: obj,
+  filter_key:   obj,
+  attribution:  obj,
   actor_id:     obj,
   target_id:    obj,
   message:      obj,
   app_data:     obj,
-  action_links: obj,   
-  attachment:   obj, 
+  action_links: obj,
+  attachment:   obj,
   comments:     obj,
   likes:        obj,
   privacy:      obj,
@@ -27,36 +27,37 @@ m.defineProperties(p, {
 });
 
 Object.defineProperties(p, {
-  datetime: { 
+  datetime: {
     configurable: true,
     get: function() {
       return new Date(this.created_time*1000);
     } },
-    
-  order: { 
+
+  order: {
     configurable: true,
     get: function() {
       return this.created_time*1;
     } },
-    
-  actor: { 
+
+  actor: {
     configurable: true,
     get: function() {
       return require('app/sync/baseSync').cached(this.actor_id);
     } },
-  target: { 
+  target: {
     configurable: true,
     get: function() {
       return require('app/sync/baseSync').cached(this.target_id);
     } },
-  source: { 
+  source: {
     configurable: true,
     get: function() {
       return require('app/sync/baseSync').cached(this.source_id);
     } },
   hasCommentsOrLikes: {
     get: function() {
-      return (this.comments && this.comments.count*1) || (this.likes && this.likes.count*1);
+      return (this.comments && this.comments.count*1) ||
+        (this.likes && this.likes.count*1);
     }
   }
 });

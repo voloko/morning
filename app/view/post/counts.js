@@ -33,7 +33,8 @@ p.compose = function() {
       { tag: 'div', className: CLS('m-post-counts-bar'), children: [
         likes && { tag: 'span', className: CLS('m-post-counts-likes m-bg-like'),
           text: formatLikes(likes), as: 'likes' },
-        comments && { tag: 'span', className: CLS('m-post-counts-comments m-bg-comment'),
+        comments && { tag: 'span',
+          className: CLS('m-post-counts-comments m-bg-comment'),
           text: formatComments(comments), as: 'comments' }
       ] }
     ] }

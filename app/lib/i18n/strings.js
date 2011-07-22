@@ -37,6 +37,11 @@ module.exports = {
   'cmt:1like': '1 person',
   'cmt:likethis': 'like this.',
   'cmt:more': 'View previous comments…',
-  'cmt:loading': 'Loading'
+  'cmt:loading': 'Loading',
+  
+  'cmps:cancel': 'Cancel',
+  'cmps:submit': 'Post',
+  'cmps:placheolder': 'Comment',
+  'cmps:sug:loading': 'Loading'
 };
 

@@ -23,13 +23,15 @@ Object.defineProperty(p, 'likes', {
     if (value*1) {
       if (!this.count) {
         this.appendChild(
-          v({ tag: 'div', className: 'm-comment-header-likes', as: 'count' }, this)
+          v(
+            { tag: 'div', className: 'm-comment-header-likes', as: 'count' },
+            this)
         )
       }
       this.count.innerHTML = '';
       var text = value > 1 ? tx('cmt:nlikes', {count: value}) : tx('cmt:1like');
       this.count.appendChild(
-        v({ tag: 'a', href: '#', text: text, 
+        v({ tag: 'a', href: '#', text: text,
           className: CLS('m-comment-header-like-number m-bg-like') })
       );
       this.count.appendChild(v({ text: ' ' + tx('cmt:likethis') }));
