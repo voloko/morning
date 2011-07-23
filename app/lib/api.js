@@ -19,15 +19,15 @@ exports.method = function(options, callback) {
 };
 
 exports.query = function(query, callback) {
-  console.log('query:sql', query);
+  // console.log('query:sql', query);
   api({ method: 'fql.query', query: query }, function(result) {
-    console.log('query:result', result);
+    // console.log('query:result', result);
     callback(result);
   });
 };
 
 exports.multiquery = function(queries, callback) {
-  console.log('multiquery:sql', queries);
+  // console.log('multiquery:sql', queries);
   api({ method: 'fql.multiquery', queries: queries }, function(result) {
     if (result.error_msg) {
       alert(result.error_msg);
@@ -37,7 +37,7 @@ exports.multiquery = function(queries, callback) {
     result.forEach(function(item) {
       hashResult[item.name] = item.fql_result_set;
     });
-    console.log('multiquery:result', hashResult);
+    // console.log('multiquery:result', hashResult);
     callback(hashResult);
   });
 };

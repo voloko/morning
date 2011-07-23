@@ -44,7 +44,7 @@ p._setup = function() {
 Object.defineProperties(p, {
   isLoading: {
     set: function(value) {
-      this.more.isLoading = value;
+      // this.more.isLoading = value;
       u.cls.toggle(this.loading, CLS('hidden'), !value);
     },
     get: function() {
