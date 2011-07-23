@@ -161,7 +161,6 @@ p.findMatches = function(mention, callback) {
   var query = ' ' + mention.toLowerCase();
   var matches = [];
   findIn(matches, query, this.extraSuggestions);
-  console.log(matches);
   if (matches.length) { callback(mention, matches); }
   require('app/sync/userSync').getFriendsFromSomewhere(function(users) {
     findIn(matches, query, users);

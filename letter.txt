@@ -1,6 +1,6 @@
 My 5 days of hacking m is about to finish. This is what I have done so far: http://mobileclienthack.com
 
-I failed to re-implement the whole msite :) Instead I focused on implementing just a few pages but with enough attention to details. I implemented: feed, comments, commenting + mentions, likes, navigation, user profiles.
+I failed to re-implement the whole msite :) Instead I focused on implementing just a few pages but with enough attention to details. I implemented: feed, comments, commenting + mentions, likes, navigation, basic user profiles.
 
 Summary
 Persistent cache for models feels much faster especially without WiFi. Footprint (cold load) is manageable. Markup generation is relatively slow, might need optimization/server prerender.

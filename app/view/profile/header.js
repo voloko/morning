@@ -15,7 +15,6 @@ var p = Header.prototype;
 p.defaultClassName = CLS('m-profile-header m-image-block');
 
 p.compose = function() {
-  console.log(this.value);
   u.cls.toggle(this, CLS('m-profile-header_min'), this.value.fieldSet == 'min');
   return this.value.fieldSet == 'min' ?
     this.composeMin() :

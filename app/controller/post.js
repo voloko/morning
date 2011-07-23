@@ -64,7 +64,6 @@ p.update = function(options) {
     this._updateActions();
   }
 
-
   postSync.fetchPost(options.id, u.bind(function(post) {
     this._setPost(post);
 

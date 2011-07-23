@@ -28,6 +28,7 @@ p.show = function(container, options) {
     postSync.fetchHome({ limit: 10, after: posts[posts.length - 1].created_time },
       function(posts) {
       stream.assimilate(posts);
+      console.log(posts.length);
       stream.hasMore = posts.length == 10;
       stream.isLoading = false;
     });
@@ -50,9 +51,10 @@ p.refresh = function() {
   var stream = this.stream;
   stream.loading.time = postSync.getHomeFromCacheTime();
   stream.isLoading = true;
+  stream.hasMore = true;
   postSync.fetchHome({ limit: 25 }, function(posts) {
     stream.assimilate(posts);
-    stream.hasMore = posts.length == 25;
+    // stream.hasMore = posts.length == 25;
     stream.isLoading = false;
   });
 };

@@ -131,7 +131,6 @@ function transitionTo(state, isForward, addToBrowserHistory) {
 };
 
 app.updateTitle = function() {
-  console.log(currentController);
   app.navbar.title = currentController.isHome ? '' : currentController.title;
   app.navbar.isHome = currentController.isHome;
   document.title = currentController.title;

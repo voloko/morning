@@ -58,7 +58,7 @@ m.defineProperties(p, {
   // pic_square_with_logo:  obj,
   // pic_with_logo:         obj,
   // allowed_restrictions:  obj,
-  verified:              obj,
+  // verified:              obj,
   // profile_blurb:         obj,
   family:                obj,
   username:              obj,
@@ -86,7 +86,6 @@ Object.defineProperties(p, {
   },
   significant_other: {
     get: function() {
-      console.log(this.significant_other_id);
       return require('app/sync/baseSync').cached(this.significant_other_id);
     }
   },
