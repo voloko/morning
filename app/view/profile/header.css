@@ -1,0 +1,61 @@
+/**
+* Copyright 2004-present Facebook. All Rights Reserved.
+*/
+.m-profile-header {
+  margin-top: 5px;
+}
+
+.m-profile-header-pic {
+  width: 100px;
+  margin-left: 5px;
+}
+
+.m-profile-header_min .m-profile-header-pic {
+  width: 50px;
+  margin-left: 55px;
+}
+
+.m-image-block-name {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.m-image-block-loading {
+  width: 30px;
+  height: 10px;
+}
+
+.m-image-block-with-icon {
+  background-position: 0 0;
+  background-repeat: no-repeat;
+  padding-left: 14px;
+  font-size: 12px;
+}
+
+.m-image-block-with-icon_birthday {
+  background-image: url(birthday.png);
+}
+
+.m-image-block-with-icon_lang {
+  background-image: url(lang.png);
+}
+
+.m-image-block-with-icon_origin {
+  background-image: url(origin.png);
+}
+
+.m-image-block-with-icon_place {
+  background-image: url(place.png);
+}
+
+.m-image-block-with-icon_relationship {
+  background-image: url(relationship.png);
+}
+
+.m-image-block-with-icon_school {
+  background-image: url(school.png);
+}
+
+.m-image-block-with-icon_work {
+  background-image: url(work.png);
+}

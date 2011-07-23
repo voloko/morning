@@ -10,12 +10,12 @@ var p = User.prototype;
 var obj = {};
 m.defineProperties(p, {
   uid:                   obj,
-  first_name:            obj,
-  middle_name:           obj,
-  last_name:             obj,
+  // first_name:            obj,
+  // middle_name:           obj,
+  // last_name:             obj,
   name:                  obj,
-  pic_small:             obj,
-  pic_big:               obj,
+  // pic_small:             obj,
+  // pic_big:               obj,
   pic_square:            obj,
   pic:                   obj,
   affiliations:          obj,
@@ -53,13 +53,13 @@ m.defineProperties(p, {
   proxied_email:         obj,
   profile_url:           obj,
   email_hashes:          obj,
-  pic_small_with_logo:   obj,
-  pic_big_with_logo:     obj,
-  pic_square_with_logo:  obj,
-  pic_with_logo:         obj,
-  allowed_restrictions:  obj,
+  // pic_small_with_logo:   obj,
+  // pic_big_with_logo:     obj,
+  // pic_square_with_logo:  obj,
+  // pic_with_logo:         obj,
+  // allowed_restrictions:  obj,
   verified:              obj,
-  profile_blurb:         obj,
+  // profile_blurb:         obj,
   family:                obj,
   username:              obj,
   website:               obj,
@@ -75,12 +75,20 @@ p.match = function(mention) {
   return this.searchIndex.indexOf(mention) > -1;
 };
 
-Object.defineProperty(p, 'searchIndex', {
-  get: function() {
-    if (!this._searchIndex) {
-      this._searchIndex = (' ' + this.name + ' ' + this.username).toLowerCase();
+Object.defineProperties(p, {
+  searchIndex: {
+    get: function() {
+      if (!this._searchIndex) {
+        this._searchIndex = (' ' + this.name + ' ' + this.username).toLowerCase();
+      }
+      return this._searchIndex;
     }
-    return this._searchIndex;
+  },
+  significant_other: {
+    get: function() {
+      console.log(this.significant_other_id);
+      return require('app/sync/baseSync').cached(this.significant_other_id);
+    }
   }
 });
 

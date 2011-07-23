@@ -104,7 +104,7 @@ function transitionTo(state, isForward, addToBrowserHistory) {
   state.meta = state.meta || {};
   var newController = getController(state.name, state.options);
 
-  if (!currentController || newController === currentController) {
+  if (!currentController) {
     currentController = newController;
     app.container.appendChild(newController.container);
     window.scrollTo(0, state.meta.top);
@@ -179,6 +179,7 @@ function getControllerClass(name) {
   switch(name) {
     case 'home': return require('./controller/home');
     case 'post': return require('./controller/post');
+    case 'profile': return require('./controller/profile');
   }
   return null;
 }

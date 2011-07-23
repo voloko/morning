@@ -42,6 +42,14 @@ module.exports = {
 
   'cmps:cancel': 'Cancel',
   'cmps:submit': 'Post',
-  'cmps:placheolder': 'Comment'
+  'cmps:placheolder': 'Comment',
+  
+  'profile:workpast': 'Worked as {position} at {company}',
+  'profile:work': '{position} at {company}',
+  'profile:edupast':  'Studied {concentration} at {school}',
+  'profile:edu':  'Studies {concentration} at {school}',
+  'profile:hometown':  'From {name}',
+  'profile:location':  'Lives at {name}',
+  'profile:relationship':  '{status}'
 };
 

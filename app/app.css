@@ -49,3 +49,8 @@ table {
 .m-container_blue {
   background-color: #ECEFF5;
 }
+
+h1, h2 {
+  margin: 0;
+  padding: 0;
+}

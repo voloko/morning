@@ -56,10 +56,21 @@ p.composeCounts = function() {
 p.composeActions = function() {
   var id = this.value.id;
   return { tag: 'a', className: CLS('m-post-more'), href: '#', as: 'more',
-    'data-click-action': function() {
-      require('app/app').goTo({ name: 'post', options: { id: id } }, true);
-    } };
+    'data-click-action': goToPost };
 };
+
+function goToProfile() {
+  require('app/app').goTo({
+    name: 'profile',
+    options: { id: v.nearest(this).value.actor_id }
+  }, true);
+}
+function goToPost() {
+  require('app/app').goTo({
+    name: 'post',
+    options: { id: v.nearest(this).value.id }
+  }, true);
+}
 
 p.composeVoice = function() {
   var target = this.value.target;
@@ -68,14 +79,15 @@ p.composeVoice = function() {
   if (target) {
     return v({ fragment: true, children: [
       { tag: 'a', className: CLS('m-post-actor'), text: actor.name,
-        href: actor.url },
+        href: actor.url, 'data-click-action': goToProfile },
       { tag: 'span', className: CLS('m-post-arrow'), text: ' \u25B6 '},
       { tag: 'a', className: CLS('m-post-target'), text: target.name,
         href: target.url }
     ] });
   }
   return actor && v({ tag: 'a', className: CLS('m-post-actor'),
-    text: actor.name, href: actor.url });
+    text: actor.name, 'data-click-action': goToProfile,
+      href: actor.url });
 };
 
 p.composeMessage = function() {

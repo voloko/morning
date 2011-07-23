@@ -13,7 +13,6 @@ var p = Post.prototype;
 p.defaultClassName = CLS('m-comment m-image-block');
 
 p.compose = function() {
-  this.refs = {};
   var r = v({ fragment: true, children: [
     { tag: 'img', className: CLS("m-comment-pic m-image-block-left"),
       src: this.value.from.pic_square
@@ -42,7 +41,8 @@ var cp = Count.prototype;
 cp._createDom = function() {
   this.dom = v({ tag: 'span', children: [
     { text: ' \u00B7 '},
-    { tag: 'a', href: '#', className: CLS('m-comment-like-count'), as: 'likesCount'}
+    { tag: 'a', href: '#', className: CLS('m-comment-like-count'),
+      as: 'likesCount'}
   ]}, this)
 };
 

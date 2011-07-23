@@ -19,7 +19,9 @@ exports.method = function(options, callback) {
 };
 
 exports.query = function(query, callback) {
+  console.log('query:sql', query);
   api({ method: 'fql.query', query: query }, function(result) {
+    console.log('query:result', result);
     callback(result);
   });
 };

@@ -7,14 +7,31 @@ var Base = require('./baseSync');
 
 var Sync = u.extend({}, Base, {
   model: require('app/model/user'),
-  
+
   fqlTable: 'user',
-  
+
   getFqlFieldsMinimal: function() {
     return ['uid', 'name', 'pic_square', 'username', 'profile_url'];
   }
-  
+
 });
+
+Sync.getUserFromCache = function(id) {
+  return Base.cached(id);
+};
+
+Sync.fetchUser = function(id, callback) {
+  api.multiquery({
+    user: Sync.buildSELECT('all') + ' WHERE uid = "' + id + '"',
+    other: Sync.buildSELECT('min') +
+      ' WHERE uid IN (SELECT significant_other_id FROM #user)'
+  }, function(r) {
+      var users = Sync.createAndCacheModels('all', r.user, true);
+      Sync.createAndCacheModels('min', r.other, true);
+      callback(users[0]);
+  });
+};
+
 
 var queue = [];
 var TTL = 1000*60*60*24; // cache once a week
@@ -53,7 +70,7 @@ Sync.getFriendsFromCache = function() {
 
 Sync.fetchFriends = function(callback) {
   api.multiquery({
-    users: Sync.buildSELECT('min') + 
+    users: Sync.buildSELECT('min') +
       ' WHERE uid in (SELECT uid2 FROM #ids)',
     ids: 'SELECT uid2 FROM friend WHERE uid1 = me()'
   }, function(r) {
@@ -61,7 +78,7 @@ Sync.fetchFriends = function(callback) {
     Base.addToCache({ id: 'request:friends', ids: r.users.map(function(u) {
       return u.uid;
     }) }, true);
-    
+
     callback(users);
   });
 };

@@ -8,7 +8,7 @@ var u = require('muv/u');
 module.exports = function(wrapper, a, b, isForward, targetScrollTop, callback) {
   // if (1 || a.style.webkitTransform === undefined) {
     wrapper.appendChild(b);
-    a.parentNode.removeChild(a);
+    if (a != b) a.parentNode.removeChild(a);
     setTimeout(function() {
       window.scrollTo(0, targetScrollTop);
     }, 1);
