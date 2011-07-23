@@ -6,3 +6,5 @@ git clone git://github.com/voloko/muv.git
 npm install uglify-js cssom mime express
 cd morning
 node server run.js
+
+go to http://localhost:8001/

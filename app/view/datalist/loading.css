@@ -6,6 +6,7 @@
   border-left: none;
   border-right: none;
   height: 40px;
+  background: #FFF;
 }
 
 .m-datalist-loading-label {

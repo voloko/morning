@@ -28,7 +28,6 @@ p.show = function(container, options) {
     postSync.fetchHome({ limit: 10, after: posts[posts.length - 1].created_time },
       function(posts) {
       stream.assimilate(posts);
-      console.log(posts.length);
       stream.hasMore = posts.length == 10;
       stream.isLoading = false;
     });
