@@ -1,3 +1,6 @@
+/**
+* Copyright 2004-present Facebook. All Rights Reserved.
+*/
 requireCss('./timestamp.css');
 
 var timeSince = require('app/lib/timeSince');

@@ -1,3 +1,6 @@
+/**
+* Copyright 2004-present Facebook. All Rights Reserved.
+*/
 requireCss('./comment.css');
 
 var v = require('muv/v');

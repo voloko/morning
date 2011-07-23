@@ -1,3 +1,6 @@
+/**
+* Copyright 2004-present Facebook. All Rights Reserved.
+*/
 requireCss('./app.css');
 global.console = global.console || function() {};
 var v = require('muv/v');

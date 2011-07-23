@@ -1,3 +1,6 @@
+/**
+* Copyright 2004-present Facebook. All Rights Reserved.
+*/
 var u = require('muv/u');
 var api = require('app/lib/api');
 var Base = require('./baseSync');

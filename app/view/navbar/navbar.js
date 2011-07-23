@@ -1,3 +1,6 @@
+/**
+* Copyright 2004-present Facebook. All Rights Reserved.
+*/
 requireCss('./navbar.css');
 
 var v = require('muv/v');

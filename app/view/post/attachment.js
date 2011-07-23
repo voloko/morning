@@ -1,3 +1,6 @@
+/**
+* Copyright 2004-present Facebook. All Rights Reserved.
+*/
 requireCss('./post.css');
 requireCss('./attachment.css');
 requireCss('../image-block/image-block.css');

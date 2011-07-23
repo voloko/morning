@@ -1,3 +1,6 @@
+/**
+* Copyright 2004-present Facebook. All Rights Reserved.
+*/
 var tx = require('./tx');
 
 var MINUTE = 60;

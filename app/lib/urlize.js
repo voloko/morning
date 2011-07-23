@@ -1,3 +1,6 @@
+/**
+* Copyright 2004-present Facebook. All Rights Reserved.
+*/
 var re = /(.*?)\b((http:\/\/|www\.|http:\/\/www\.)[^ ]{2,300})\b/g;
 function urlize(string, textProcessor, linkProcessor) {
   return string.replace(re, function(match) {

@@ -1,3 +1,6 @@
+/**
+* Copyright 2004-present Facebook. All Rights Reserved.
+*/
 var strings = require('./i18n/strings');
 
 module.exports = function(txKey, args) {

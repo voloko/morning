@@ -1,3 +1,6 @@
+/**
+* Copyright 2004-present Facebook. All Rights Reserved.
+*/
 module.exports = {
   'dtr:1min': 'about a minute ago',
   'dtr:nmin': '{number} minutes ago',
