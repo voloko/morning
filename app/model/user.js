@@ -89,6 +89,9 @@ Object.defineProperties(p, {
       console.log(this.significant_other_id);
       return require('app/sync/baseSync').cached(this.significant_other_id);
     }
+  },
+  type: {
+    get: function() { return 'user' }
   }
 });
 

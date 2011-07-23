@@ -20,7 +20,8 @@ p.compose = function() {
     { tag: 'div', className: CLS('m-image-block-content'), children: [
       { tag: 'a', className: CLS('m-comment-from'),
         text: this.value.from.name,
-        href: this.value.from.url },
+        href: this.value.from.url,
+        'data-click-action': require('app/lib/actions').goToProfile },
       { text: ' ' + this.value.text },
       { tag: 'div', className: CLS('m-comment-actions'), children: [
         { view: require('app/view/timestamp/timestamp'), tag: 'span',

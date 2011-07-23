@@ -108,6 +108,7 @@ function transitionTo(state, isForward, addToBrowserHistory) {
     currentController = newController;
     app.container.appendChild(newController.container);
     window.scrollTo(0, state.meta.top);
+    app.updateTitle();
   } else {
     var transition = require('./lib/transition');
     transition(
@@ -124,11 +125,16 @@ function transitionTo(state, isForward, addToBrowserHistory) {
         } else {
           replaceState(state);
         }
+        app.updateTitle();
     });
   }
-  app.navbar.title = newController.isHome ? '' : newController.title;
-  app.navbar.isHome = newController.isHome;
-  document.title = newController.title;
+};
+
+app.updateTitle = function() {
+  console.log(currentController);
+  app.navbar.title = currentController.isHome ? '' : currentController.title;
+  app.navbar.isHome = currentController.isHome;
+  document.title = currentController.title;
 };
 
 function getController(name, options) {

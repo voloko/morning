@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+	<title>Facebook</title>
+</head>
+
+<body class="fc">
+  <div id="fb-root"></div>
+  <script type="text/javascript" charset="utf-8" src="/app/app.js?1311401631"></script>
+  <script type="text/javascript" charset="utf-8">
+    app.init();
+  </script>
+  <script>
+    var appId = location.host.match(/localhost/) ? '142936615786776' : '221956687842012';
+    window.fbAsyncInit = function() {
+      FB.init({appId: appId, status: false, cookie: true, xfbml: false });
+      FB.getLoginStatus(function(response) {
+        if (!response.perms) {
+          location.href = '/login.html';
+        } else {
+          app.apiReady();
+        }
+      });
+    };
+    (function() {
+      var e = document.createElement('script'); 
+      e.async = true;
+      e.src = '//connect.facebook.net/en_US/all.js';
+      document.getElementById('fb-root').appendChild(e);
+    }());  
+  </script>
+</body>
+</html>

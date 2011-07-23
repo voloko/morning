@@ -23,6 +23,8 @@ p.update = function(options) {
   var user = userSync.getUserFromCache(options.id);
   if (user) {
     this.header.value = user;
+    this.title = user.name;
+    require('app/app').updateTitle();
   }
   userSync.fetchUser(this.options.id, u.bind(function(user) {
     this.header.value = user
