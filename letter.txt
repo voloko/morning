@@ -1,0 +1,17 @@
+My 5 days of hacking m is about to finish. This is what I have so far:
+http://mobileclienthack.com
+
+I failed to re-implement the whole msite :) Instead I focused on implementing just a few pages but with enough attention to details. I implemented: feed, comments, user profiles, commenting + mentions, likes, navigation.
+
+Summary
+Persistent cache for models feels much faster. MVC + bindings work well. Footprint is manageable. Markup generation is relatively slow, might need optimization.
+
+Notable
+The largest issue I have is connect.js. As of now it's 2x the size of the app and it's cached just for 1h => longer cold cache loading, 1 extra request for warm cache.
+
+@Bret Taylor pointed in one of the diffs that dom construction using document.create* is mostly as fast as templates + innerHTML. It seems to be true for modern mobile browsers. I run some basic tests. And the difference is <30%. So I use dom building instead of templates everywhere. 
+However regardless of the method used markup generation is slow on a mobile device. It's not severe but it's noticeable.
+
+I tried to keep the footprint as small as possible (app + images + css ~20kb gzip). Thus I'm not using any existing frameworks (bolt, uki, javelin). For this task I wrote a small (<3kb gzip) library that does models, bindings, view building and some utility methods. I also compress css class names, embed css/images into js package and cache heavily. Cache manifest might be also a good 
+
+I use localStorage for persistent cache. So when you refresh your feed you should see old feed + 'Loading, last updated 3 hours ago'. Same for comments, profiles, likes. There's also in-memory cache for the models used, recent controllers + generated dom. There's a simple gc for localStorage. There are 2 cache profiles for users: minimal (completions) and all (profiles)

@@ -60,14 +60,22 @@ app.goBack = function() {
   }
   var state = currentController.parentState ||
     currentController.defaultParentState;
-  if (state) { app.goTo(state, false); }
+  if (state) {
+    replaceState(app.state, true);
+    transitionTo(state, false);
+  }
+};
+
+app.goTo = function(state, addToBrowserHistory) {
+  replaceState(app.state);
+  transitionTo(state, true, addToBrowserHistory);
 };
 
 window.addEventListener('popstate', function(e) {
   if (e.state) {
     var isForward = e.state.meta.depth > app.state.meta.depth;
     app.state = e.state;
-    app.transitionTo(e.state, isForward);
+    transitionTo(e.state, isForward);
   }
 });
 
@@ -76,21 +84,22 @@ function generateMeta(deptOffset) {
   return { top: document.body.scrollTop, depth: depth + deptOffset };
 }
 
-app.replaceState = function(state) {
+function replaceState(state) {
   var meta = generateMeta(0);
   app.state = { name: state.name, options: state.options, meta: meta };
-  history.replaceState(this.state, null, buildUrl(this.state));
+  history.replaceState(app.state, null, buildUrl(app.state));
 };
 
-app.pushState = function(state, deptOffset) {
+function pushState(state, deptOffset, addToBrowserHistory) {
   var meta = generateMeta(1);
   app.state = { name: state.name, options: state.options, meta: meta };
-  history.pushState(this.state, null, buildUrl(this.state));
+  addToBrowserHistory &&
+    history.pushState(app.state, null, buildUrl(app.state));
 };
 
-app.transitionTo = function(state, isForward) {
+function transitionTo(state, isForward, addToBrowserHistory) {
   state.meta = state.meta || {};
-  var newController = app.getController(state.name, state.options);
+  var newController = getController(state.name, state.options);
 
   if (!currentController || newController === currentController) {
     currentController = newController;
@@ -108,9 +117,9 @@ app.transitionTo = function(state, isForward) {
         currentController = newController;
         if (isForward) {
           newController.parentState = app.state;
-          app.pushState(state);
+          pushState(state, isForward ? 1 : -1, addToBrowserHistory);
         } else {
-          app.replaceState(state);
+          replaceState(state);
         }
     });
   }
@@ -119,7 +128,7 @@ app.transitionTo = function(state, isForward) {
   document.title = newController.title;
 };
 
-app.getController = function(name, options) {
+function getController(name, options) {
   if (controllers[name]) {
     controllers[name].update(options);
   } else {
@@ -129,11 +138,6 @@ app.getController = function(name, options) {
     controllers[name].show(container, options);
   }
   return controllers[name];
-};
-
-app.goTo = function(state, isForward) {
-  app.replaceState(app.state);
-  app.transitionTo(state, isForward);
 };
 
 function buildUrl(state) {
@@ -164,8 +168,8 @@ function extactStateFromUrl() {
     options = {};
   }
   var state = { name: name, options: options };
-  app.replaceState(state, 0);
-  app.transitionTo(state);
+  replaceState(state);
+  transitionTo(state);
 }
 
 function getControllerClass(name) {

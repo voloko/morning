@@ -60,6 +60,9 @@ var walker = pro.ast_walker(),
              var result = ['string', args[0][1]];
              state.cls.push(result);
              return result;
+           }  else if (expr[0] === 'name' && expr[1] === TO_DATA_URI) {
+             var file = resolvePath(args[0][1]);
+             return ['string', imagePathToDataUri(file)];
            }
            return null;
        },
